@@ -96,8 +96,8 @@ public class ProdutoDAO {
             stmt.setInt(2, produto.getId_marca());
             stmt.setInt(3, produto.getId_linha());
             stmt.setInt(4, produto.getEstoque());
-            stmt.setDouble(5, produto.getPcompra());
-            stmt.setDouble(6, produto.getPvenda());
+            stmt.setBigDecimal(5, produto.getPcompra());
+            stmt.setBigDecimal(6, produto.getPvenda());
 
 
             stmt.executeUpdate();
@@ -133,8 +133,8 @@ public class ProdutoDAO {
                     prod.setId(rs.getInt(1));
                     prod.setDescricao(rs.getString(2));
                     prod.setEstoque((rs.getInt(3)));
-                    prod.setPcompra(rs.getDouble(4));
-                    prod.setPvenda(rs.getDouble(5));
+                    prod.setPcompra(rs.getBigDecimal(4));
+                    prod.setPvenda(rs.getBigDecimal(5));
                     
                     produto.add(prod);
                 }
@@ -201,8 +201,8 @@ public class ProdutoDAO {
                       produto.setId_linha(rs.getInt("p.id_linha"));
                       produto.setId_marca(rs.getInt("p.id_marca"));
                       produto.setEstoque(Integer.parseInt(rs.getString("p.estoque")));
-                      produto.setPcompra(rs.getDouble("p.pcompra"));
-                      produto.setPvenda(rs.getDouble("p.pvenda"));
+                      produto.setPcompra(rs.getBigDecimal("p.pcompra"));
+                      produto.setPvenda(rs.getBigDecimal("p.pvenda"));
  
                     }
     
@@ -229,8 +229,8 @@ public class ProdutoDAO {
             pst.setInt(2, p.getId_marca());
             pst.setInt(3, p.getId_linha());
             pst.setInt(4, p.getEstoque());
-            pst.setDouble(5, p.getPcompra());
-            pst.setDouble(6, p.getPvenda());
+            pst.setBigDecimal(5, p.getPcompra());
+            pst.setBigDecimal(6, p.getPvenda());
             pst.setInt(7, p.getId());
             
             System.out.println("Compra:" + p.getPcompra());

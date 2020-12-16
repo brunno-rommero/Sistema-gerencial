@@ -15,13 +15,10 @@ import br.com.sgef.model.Marca;
 import br.com.sgef.model.Produto;
 import java.awt.Dimension;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
 /**
  *
  * @author Bruno
@@ -127,14 +124,12 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
         jLabel7.setText("P. de Venda");
 
-        txtCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         txtCompra.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCompraFocusLost(evt);
             }
         });
 
-        txtvend.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         txtvend.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtvendFocusLost(evt);
@@ -420,8 +415,8 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         String valorVenda = valorSemFormatarVenda.replace(",", ".").replace("R$", "").replace(" ", "");
         
         String valorSemFormatarCompra = txtCompra.getText();
-        BigDecimal valorCompra = new BigDecimal (valorSemFormatarCompra.replace(",", ".").replace("R$", "").replace(" ", ""));
-        
+        String valorCompra = valorSemFormatarCompra.replace(",", ".").replace("R$", "").replace(" ", "");
+        //BigDecimal valorCompra = new BigDecimal (valorSemFormatarCompra.replace(",", ".").replace("R$", "").replace(" ", ""));
        
         JOptionPane.showMessageDialog(null, "Valor Compra:" + valorCompra);
         
@@ -443,8 +438,8 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             produto.setId(Integer.parseInt(txtCod.getText()));
             produto.setDescricao(txtDescricao.getText());
             produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
-            produto.setPvenda(Double.parseDouble(valorVenda));
-            //produto.setPcompra(Double.parseDouble(valorCompra));
+            produto.setPvenda(new BigDecimal(valorVenda));
+            produto.setPcompra(new BigDecimal (valorCompra));
             produto.setId_linha(linha.getId());
             produto.setId_marca(marca.getId());
             
@@ -507,8 +502,8 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
             produto.setDescricao(txtDescricao.getText());
             produto.setEstoque(Integer.parseInt(txtEstoque.getText()));
-            produto.setPcompra(Double.parseDouble(valorCompra));
-            produto.setPvenda(Double.parseDouble(valorVenda));
+            produto.setPcompra(new BigDecimal(valorCompra));
+            produto.setPvenda(new BigDecimal(valorVenda));
             produto.setId_linha(linha.getId());
             produto.setId_marca(marca.getId());
 
@@ -616,22 +611,13 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         Object id = tblProduto.getValueAt(k, 0);
         txtCod.setText(id.toString());
         produto.setId(Integer.parseInt(id.toString()));
-        
-        
-        String valorSemFormatarVenda = String.valueOf(dao.pesquisa_por_id((Integer) id).getPvenda());
-        String valorSemFormatarCompra = String.valueOf(dao.pesquisa_por_id((Integer) id).getPcompra());
-        Double valorNovoVenda = new Double(valorSemFormatarVenda);
-        Double valorNovoCompra = new Double(valorSemFormatarCompra);
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        String valorFormatadoVenda = nf.format(valorNovoVenda).trim();
-        String valorFormatadoCompra = nf.format(valorNovoCompra).trim();
-        
+
         //setar o restante dos campos
         int setar = tblProduto.getSelectedRow();
         txtDescricao.setText(dao.pesquisa_por_id((Integer) id).getDescricao());
         txtEstoque.setText(String.valueOf(dao.pesquisa_por_id((Integer) id).getEstoque()));
-        txtvend.setText(valorFormatadoVenda);
-        txtCompra.setText(valorFormatadoCompra);
+        txtvend.setText(dao.pesquisa_por_id((Integer) id).getPvenda().toString());
+        txtCompra.setText(dao.pesquisa_por_id((Integer) id).getPcompra().toString());
         linhaComboModel.setSelectedItem(linhadao.pesquisa_por_id(dao.pesquisa_por_id((Integer) id).getId_linha()));
         marcaComboModel.setSelectedItem(marcadao.pesquisa_por_id(dao.pesquisa_por_id((Integer) id).getId_marca()));
         
@@ -648,24 +634,26 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
     private void txtvendFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtvendFocusLost
         // TODO add your handling code here:       
+        /*
         String valorSemFormatar = txtvend.getText();
-        String vsf = valorSemFormatar.replace("R$", "").replace(",", ".");
-        Double valor = new Double(vsf);
+        String vsf = valorSemFormatar.replace("R$", "").replace(",", ".").replace(" ", "");
+        BigDecimal valor = new BigDecimal(vsf);
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         String valorFormatado = nf.format(valor);
         txtvend.setText(valorFormatado);
-        
+        */
     }//GEN-LAST:event_txtvendFocusLost
 
     private void txtCompraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCompraFocusLost
         // TODO add your handling code here:
+       /*
         String valorSemFormatar = txtCompra.getText();
-        String vsf = valorSemFormatar.replace("R$", "").replace(",", ".");
-        Double valor = new Double(vsf);
+        String vsf = valorSemFormatar.replace("R$", "").replace(",", ".").replace(" ", "");
+        BigDecimal valor = new BigDecimal(vsf);
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         String valorFormatado = nf.format(valor);
         txtCompra.setText(valorFormatado);
-        
+        */
     }//GEN-LAST:event_txtCompraFocusLost
 
 

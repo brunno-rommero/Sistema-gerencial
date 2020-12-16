@@ -5,6 +5,8 @@
  */
 package br.com.sgef.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Bruno
@@ -17,8 +19,8 @@ public class Produto {
     private int id_linha;
     private Linha linha;
     private int estoque;
-    private Double pcompra;
-    private Double pvenda;
+    private BigDecimal pcompra;
+    private BigDecimal pvenda;
 
     /**
      * @return the id
@@ -93,28 +95,28 @@ public class Produto {
     /**
      * @return the pcompra
      */
-    public Double getPcompra() {
+    public BigDecimal getPcompra() {
         return pcompra;
     }
 
     /**
      * @param pcompra the pcompra to set
      */
-    public void setPcompra(Double pcompra) {
+    public void setPcompra(BigDecimal pcompra) {
         this.pcompra = pcompra;
     }
 
     /**
      * @return the pvenda
      */
-    public Double getPvenda() {
+    public BigDecimal getPvenda() {
         return pvenda;
     }
 
     /**
      * @param pvenda the pvenda to set
      */
-    public void setPvenda(Double pvenda) {
+    public void setPvenda(BigDecimal pvenda) {
         this.pvenda = pvenda;
     }
 
