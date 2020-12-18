@@ -5,6 +5,7 @@
  */
 package br.com.sgef.telas;
 
+import br.com.sgef.dao.NumeroDocument;
 import br.com.sgef.dao.LinhaComboModelDAO;
 import br.com.sgef.dao.LinhaDAO;
 import br.com.sgef.dao.MarcaComboModelDAO;
@@ -15,15 +16,17 @@ import br.com.sgef.model.Marca;
 import br.com.sgef.model.Produto;
 import java.awt.Dimension;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Bruno
  */
-
 
 public class TelaCadProduto extends javax.swing.JInternalFrame {
     
@@ -54,7 +57,13 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         
         tblProduto.getColumnModel().getColumn(0).setMaxWidth(40);
 
-   
+        // as linhas abaixo coloca mascara monetária
+        txtCompra.setHorizontalAlignment(txtCompra.RIGHT);
+        txtCompra.setDocument(new NumeroDocument(9,2));
+        
+        txtvend.setHorizontalAlignment(txtvend.RIGHT);
+        txtvend.setDocument(new NumeroDocument(9,2));
+
     }
     
     public void setPosicao() {
@@ -83,19 +92,17 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtEstoque = new javax.swing.JTextField();
-        txtCompra = new javax.swing.JFormattedTextField();
-        txtvend = new javax.swing.JFormattedTextField();
         btnExcluir = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtPesquisar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProduto = new javax.swing.JTable();
+        txtCompra = new javax.swing.JTextField();
+        txtvend = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -123,23 +130,6 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         jLabel6.setText("P. de Compra");
 
         jLabel7.setText("P. de Venda");
-
-        txtCompra.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCompraFocusLost(evt);
-            }
-        });
-
-        txtvend.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtvendFocusLost(evt);
-            }
-        });
-        txtvend.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtvendKeyPressed(evt);
-            }
-        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/sgef/icones/delete.png"))); // NOI18N
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -170,10 +160,6 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("+");
-
-        jButton4.setText("+");
-
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 0, 0));
         jLabel10.setText("Método de Pesquisa");
@@ -196,7 +182,7 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Cód", "Descrição", "Preço Venda", "Estoque", "Preço Compra"
+                "Cód", "Descrição", "Preço Compra", "Estoque", "Preço Venda"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -213,6 +199,14 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(tblProduto);
+
+        txtCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCompraKeyPressed(evt);
+            }
+        });
+
+        txtvend.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -238,18 +232,12 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton4)))
-                                .addGap(18, 18, 18)
+                                    .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(32, 32, 32)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(ComboLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton1))
-                                    .addComponent(jLabel4))
-                                .addGap(15, 15, 15)
+                                    .addComponent(jLabel4)
+                                    .addComponent(ComboLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEstoque)
                                     .addGroup(layout.createSequentialGroup()
@@ -263,7 +251,7 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(txtvend, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,9 +291,7 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboLinha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton1))
+                    .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -328,7 +314,7 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -366,7 +352,6 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             }
         }
         
-        
         DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
@@ -378,9 +363,10 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{
                 p.getId(),
                 p.getDescricao(),
-                valorVendas,
+                valorCompras,
                 p.getEstoque(),
-                valorCompras
+                valorVendas
+                
             });
 
         }
@@ -412,13 +398,10 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         LinhaDAO linhadao = new LinhaDAO();
 
         String valorSemFormatarVenda = txtvend.getText();
-        String valorVenda = valorSemFormatarVenda.replace(",", ".").replace("R$", "").replace(" ", "");
+        String valorVenda = valorSemFormatarVenda.replace(".", "").replace(",", ".");
         
         String valorSemFormatarCompra = txtCompra.getText();
-        String valorCompra = valorSemFormatarCompra.replace(",", ".").replace("R$", "").replace(" ", "");
-        //BigDecimal valorCompra = new BigDecimal (valorSemFormatarCompra.replace(",", ".").replace("R$", "").replace(" ", ""));
-       
-        JOptionPane.showMessageDialog(null, "Valor Compra:" + valorCompra);
+        String valorCompra = valorSemFormatarCompra.replace(".", "").replace(",", ".");
         
         if(txtCod.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Selecione um registro para ser editado !");
@@ -467,9 +450,9 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{
                 p.getId(),
                 p.getDescricao(),
-                valorVendas,
+                valorCompras,
                 p.getEstoque(),
-                valorCompras
+                valorVendas
             });
 
         } 
@@ -485,11 +468,11 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         
         
         String valorSemFormatarVenda = txtvend.getText();
-        String valorVenda = valorSemFormatarVenda.replace(",", ".").replace("R$", "").replace(" ", "");
+        String valorVenda = valorSemFormatarVenda.replace(".", "").replace(",", ".");
         
         
         String valorSemFormatarCompra = txtCompra.getText();
-        String valorCompra = valorSemFormatarCompra.replace(",", ".").replace("R$", "").replace(" ", "");
+        String valorCompra = valorSemFormatarCompra.replace(".", "").replace(",", ".");
         
         
         if ((txtDescricao.getText().isEmpty()) || (txtEstoque.getText().isEmpty()) || (linhaComboModel.getSelectedItem() == null) ||
@@ -531,9 +514,9 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{
                 p.getId(),
                 p.getDescricao(),
-                valorVendas,
+                valorCompras,
                 p.getEstoque(),
-                valorCompras
+                valorVendas
             });
 
         }
@@ -547,21 +530,21 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
         //ao digitar no campo de pesquisa ou apertar enter faz a consulta no banco utilizando like
         ProdutoDAO dao = new ProdutoDAO();
-        
+
         DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
         ((DefaultTableModel) tblProduto.getModel()).setRowCount(0);
         
         for (Produto p: dao.read(this.txtPesquisar.getText().toString())) {
-            String valorCompra = nf.format(p.getPcompra());
-            String valorVenda = nf.format(p.getPvenda());
+            String valorCompras = nf.format(p.getPcompra());
+            String valorVendas = nf.format(p.getPvenda());
             modelo.addRow(new Object[]{
                 p.getId(),
                 p.getDescricao(),
-                valorVenda,
+                valorCompras,
                 p.getEstoque(),
-                valorCompra.trim()
+                valorVendas
             });
 
         }
@@ -570,26 +553,22 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // ao clicar no botao buscar faz a consulta com o parametro passar no txtPesquisar
-        
         ProdutoDAO dao = new ProdutoDAO();
-        
+
         DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        
-        
-        
         //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
         ((DefaultTableModel) tblProduto.getModel()).setRowCount(0);
-
+        
         for (Produto p: dao.read(this.txtPesquisar.getText().toString())) {
-            String valorCompra = nf.format(p.getPcompra());
-            String valorVenda = nf.format(p.getPvenda());
+            String valorCompras = nf.format(p.getPcompra());
+            String valorVendas = nf.format(p.getPvenda());
             modelo.addRow(new Object[]{
                 p.getId(),
                 p.getDescricao(),
-                valorVenda,
+                valorCompras,
                 p.getEstoque(),
-                valorCompra
+                valorVendas
             });
 
         }
@@ -626,35 +605,10 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tblProdutoMouseClicked
 
-    private void txtvendKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtvendKeyPressed
+    private void txtCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCompraKeyPressed
         // TODO add your handling code here:
-
         
-    }//GEN-LAST:event_txtvendKeyPressed
-
-    private void txtvendFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtvendFocusLost
-        // TODO add your handling code here:       
-        /*
-        String valorSemFormatar = txtvend.getText();
-        String vsf = valorSemFormatar.replace("R$", "").replace(",", ".").replace(" ", "");
-        BigDecimal valor = new BigDecimal(vsf);
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        String valorFormatado = nf.format(valor);
-        txtvend.setText(valorFormatado);
-        */
-    }//GEN-LAST:event_txtvendFocusLost
-
-    private void txtCompraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCompraFocusLost
-        // TODO add your handling code here:
-       /*
-        String valorSemFormatar = txtCompra.getText();
-        String vsf = valorSemFormatar.replace("R$", "").replace(",", ".").replace(" ", "");
-        BigDecimal valor = new BigDecimal(vsf);
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        String valorFormatado = nf.format(valor);
-        txtCompra.setText(valorFormatado);
-        */
-    }//GEN-LAST:event_txtCompraFocusLost
+    }//GEN-LAST:event_txtCompraKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -663,10 +617,8 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSave;
     public javax.swing.JComboBox comboMarca;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -678,10 +630,10 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable tblProduto;
     private javax.swing.JTextField txtCod;
-    private javax.swing.JFormattedTextField txtCompra;
+    private javax.swing.JTextField txtCompra;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtEstoque;
     private javax.swing.JTextField txtPesquisar;
-    private javax.swing.JFormattedTextField txtvend;
+    private javax.swing.JTextField txtvend;
     // End of variables declaration//GEN-END:variables
 }
