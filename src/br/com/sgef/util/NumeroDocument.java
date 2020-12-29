@@ -1,4 +1,4 @@
-package br.com.sgef.dao;
+package br.com.sgef.util;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -19,6 +19,9 @@ public class NumeroDocument extends PlainDocument {
   public int iQtdDec;
   public String sMil;
   public String sDec;
+  
+
+   
   
   // Construtor para indicando apenas o tamanho máximo (incluindo o  ponto decimal), será assumido como padrao 2 decimais
   public NumeroDocument(int maxLen)
@@ -49,7 +52,7 @@ public class NumeroDocument extends PlainDocument {
   }
   
   public void insertString(int offs, String str, AttributeSet attrSet) throws BadLocationException {
-
+      
     String texto = getText(0, getLength());
     String sinal = "";
     
@@ -170,4 +173,6 @@ public class NumeroDocument extends PlainDocument {
     super.remove(0, getLength());
     insertString(0, texto, null);
   }
+
+
 } 

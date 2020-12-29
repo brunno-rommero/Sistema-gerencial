@@ -5,7 +5,7 @@
  */
 package br.com.sgef.telas;
 
-import br.com.sgef.dao.NumeroDocument;
+import br.com.sgef.util.NumeroDocument;
 import br.com.sgef.dao.LinhaComboModelDAO;
 import br.com.sgef.dao.LinhaDAO;
 import br.com.sgef.dao.MarcaComboModelDAO;
@@ -16,12 +16,9 @@ import br.com.sgef.model.Marca;
 import br.com.sgef.model.Produto;
 import java.awt.Dimension;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 /**
  *

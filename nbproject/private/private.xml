@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/telas/TelaCadFornecedor.java</file>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/telas/TelaCadProduto.java</file>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/model/Produto.java</file>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/dao/ProdutoDAO.java</file>
+            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/dao/FornecedorDAO.java</file>
         </group>
     </open-files>
 </project-private>
