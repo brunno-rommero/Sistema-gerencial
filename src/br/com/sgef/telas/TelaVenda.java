@@ -31,7 +31,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtVunit.setHorizontalAlignment(txtVunit.RIGHT);
         txtVunit.setDocument(new NumeroDocument(9,2));
         
-        
         txtQtd.setHorizontalAlignment(txtQtd.RIGHT);
         txtQtd.setDocument(new NumeroDocument(9,2));
         txtQtd.setText("1,00");
