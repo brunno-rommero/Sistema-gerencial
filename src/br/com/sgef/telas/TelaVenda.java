@@ -8,8 +8,12 @@ package br.com.sgef.telas;
 import br.com.sgef.util.NumeroDocument;
 import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.util.SoNumeros;
+import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
+import java.util.Locale;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,9 +36,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtQtd.setDocument(new NumeroDocument(9,2));
         txtQtd.setText("1,00");
         
-        
-        
-        
+        tblVenda.getColumnModel().getColumn(0).setMaxWidth(80);
     }
     
     public void setPosicao() {
@@ -63,7 +65,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtVunit = new javax.swing.JTextField();
         txtSubt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVenda = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox();
         jTextField6 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -81,6 +83,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtCod.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodFocusLost(evt);
+            }
+        });
+        txtCod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodKeyPressed(evt);
             }
         });
 
@@ -101,21 +108,36 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 txtQtdActionPerformed(evt);
             }
         });
+        txtQtd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtQtdKeyPressed(evt);
+            }
+        });
 
         txtVunit.setEditable(false);
 
         txtSubt.setEditable(false);
         txtSubt.setToolTipText("");
+        txtSubt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSubtFocusLost(evt);
+            }
+        });
+        txtSubt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSubtKeyPressed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Descrição", "Quantidade", "Valor unit"
+                "Cód", "Descrição", "Quantidade", "Valor unit", "Subtotal"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblVenda);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão", "Cheque", "A prazo" }));
 
@@ -227,21 +249,104 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
     private void txtCodFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodFocusLost
         // TODO add your handling code here:
-        
-        ProdutoDAO dao = new ProdutoDAO();
-        
-        Integer id = Integer.parseInt(txtCod.getText().trim());
-
-        txtDescProd.setText(dao.pesquisa_por_id((Integer) id).getDescricao());
-        txtVunit.setText(dao.pesquisa_por_id((Integer) id).getPvenda().toString());
-        
-        
     }//GEN-LAST:event_txtCodFocusLost
 
     private void txtQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdActionPerformed
+        // TODO add your handling code here:  
+    }//GEN-LAST:event_txtQtdActionPerformed
+
+    
+    private void txtCodKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyPressed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_txtQtdActionPerformed
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){ 
+        
+            if(txtCod.getText().isEmpty()){
+                
+                txtDescProd.setText(null);
+                txtVunit.setText(null);
+                
+                //JOptionPane.showMessageDialog(null, "Abrir tela de Consulta de Produtos");
+                
+                TelaPrincipal tp = new TelaPrincipal();
+                TelaCadProduto produto = new TelaCadProduto();
+                produto.setVisible(true);
+
+                tp.desktop.add(produto);
+                produto.setPosicao();
+                produto.setVisible(true);
+                
+                
+            }else{
+                
+                ProdutoDAO dao = new ProdutoDAO();
+        
+                Integer id = Integer.parseInt(txtCod.getText());
+
+                txtDescProd.setText(dao.pesquisa_por_id((Integer) id).getDescricao());
+                txtVunit.setText(dao.pesquisa_por_id((Integer) id).getPvenda().toString());
+                
+                Double vUnit = Double.parseDouble(txtVunit.getText().replace(",", "."));
+                Double qtd = Double.parseDouble(txtQtd.getText().replace(",", "."));
+                
+                NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+                Double subtotal =  qtd * vUnit;
+                txtSubt.setText(String.valueOf(nf.format(subtotal)));
+                
+                txtQtd.requestFocus();
+                
+            }
+                   
+        }
+        
+    }//GEN-LAST:event_txtCodKeyPressed
+
+    private void txtQtdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQtdKeyPressed
+        // TODO add your handling code here:
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){ 
+            Double vUnit = Double.parseDouble(txtVunit.getText().replace(",", "."));
+            Double qtd = Double.parseDouble(txtQtd.getText().replace(",", "."));
+
+            NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            Double subtotal =  qtd * vUnit;
+            txtSubt.setText(String.valueOf(nf.format(subtotal)));
+            txtSubt.requestFocus();
+            txtSubt.setBackground(Color.GREEN);
+            
+         }
+    }//GEN-LAST:event_txtQtdKeyPressed
+
+    private void txtSubtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        
+            DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
+            
+            modelo.addRow(new Object[]{
+                txtCod.getText(),
+                txtDescProd.getText(),
+                txtQtd.getText(),
+                txtVunit.getText(),
+                txtSubt.getText()
+            });
+            
+            txtCod.setText(null);
+            txtDescProd.setText(null);
+            txtQtd.setText("1,00");
+            txtVunit.setText(null);
+            txtSubt.setText(null);
+            txtCod.requestFocus();
+            txtSubt.setBackground(null);
+
+        }
+    }//GEN-LAST:event_txtSubtKeyPressed
+
+    private void txtSubtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSubtFocusLost
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtSubtFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -257,11 +362,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField txtCod;
+    private javax.swing.JTable tblVenda;
+    public javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtDescProd;
     private javax.swing.JTextField txtQtd;
     private javax.swing.JTextField txtSubt;

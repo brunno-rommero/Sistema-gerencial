@@ -79,6 +79,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         cadastro.setText("Cadastro     ");
 
+        cadMenUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         cadMenUser.setText("Usuário");
         cadMenUser.setEnabled(false);
         cadMenUser.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +89,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         cadastro.add(cadMenUser);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setText("Fornecedor");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +98,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         cadastro.add(jMenuItem1);
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem6.setText("Cliente");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +107,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         cadastro.add(jMenuItem6);
 
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem7.setText("Marca");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +116,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         cadastro.add(jMenuItem7);
 
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem11.setText("Linha");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +125,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         cadastro.add(jMenuItem11);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setText("Produto");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,6 +309,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         desktop.add(venda);
         venda.setPosicao();
+        venda.txtCod.requestFocus();
+        
     }//GEN-LAST:event_jMenu3MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -352,7 +360,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenuItem cadMenUser;
     private javax.swing.JMenu cadastro;
-    private javax.swing.JDesktopPane desktop;
+    public javax.swing.JDesktopPane desktop;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
