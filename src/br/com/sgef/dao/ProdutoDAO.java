@@ -191,9 +191,7 @@ public class ProdutoDAO {
              pst = con.prepareStatement(sql);
              pst.setInt(1, id);
              rs = pst.executeQuery();
-             
-             NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-             
+
              while ( rs.next() ) {
                     for (int i = 1; i <= 6; i++) {
                       
