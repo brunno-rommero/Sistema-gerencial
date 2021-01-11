@@ -7,13 +7,14 @@ package br.com.sgef.telas;
 
 import br.com.sgef.util.NumeroDocument;
 import br.com.sgef.dao.ProdutoDAO;
+import br.com.sgef.dao.VendaTableModel;
+import br.com.sgef.model.ItemVenda;
 import br.com.sgef.util.SoNumeros;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +25,9 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaVenda
      */
+    
+    VendaTableModel tableModel = new VendaTableModel();
+    
     public TelaVenda() {
         initComponents();
         txtCod.setDocument(new SoNumeros());
@@ -36,7 +40,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtQtd.setText("1,00");
         txtTotal.setText("0,00");
         
-        tblVenda.getColumnModel().getColumn(0).setMaxWidth(80);
+        
+        tblVenda.setModel(tableModel);
+        tableModel.setTableColumnModel(tblVenda.getColumnModel());
+          
+        
     }
     
     public void setPosicao() {
@@ -154,6 +162,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         tblVenda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblVendaMouseClicked(evt);
+            }
+        });
+        tblVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblVendaKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(tblVenda);
@@ -320,8 +333,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 txtDescProd.setText(dao.pesquisa_por_id((Integer) id).getDescricao());
                 txtVunit.setText(dao.pesquisa_por_id((Integer) id).getPvenda().toString());
                 
-                Double vUnit = Double.parseDouble(txtVunit.getText().replace(",", "."));
-                Double qtd = Double.parseDouble(txtQtd.getText().replace(",", "."));
+                Double vUnit = Double.parseDouble(txtVunit.getText().replace(".", "") .replace(",", "."));
+                Double qtd = Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", "."));
                 
                 Double subtotal =  qtd * vUnit;
                 DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -339,8 +352,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){ 
-            Double vUnit = Double.parseDouble(txtVunit.getText().replace(",", "."));
-            Double qtd = Double.parseDouble(txtQtd.getText().replace(",", "."));
+            Double vUnit = Double.parseDouble(txtVunit.getText().replace(".", "").replace(",", "."));
+            Double qtd = Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", "."));
 
             DecimalFormat df = new DecimalFormat("#,##0.00");
             
@@ -354,6 +367,24 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
     private void txtSubtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtKeyPressed
         // TODO add your handling code here:
+        ItemVenda itV = new ItemVenda();
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+           
+            itV.setCodigo(Integer.parseInt(txtCod.getText()));
+            itV.setProduto(txtDescProd.getText());
+            itV.setQuantidade(Double.parseDouble(txtQtd.getText().replaceAll(",00", "")));
+            itV.setValorUnit(Double.parseDouble(txtVunit.getText().replace(",", ".")));
+            itV.setSubtotal(Double.parseDouble(txtSubt.getText().replace(",", ".")));
+
+            tableModel.addRow(itV);
+            
+        }
+        
+        
+        
+        
+        /*
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
         
             DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
@@ -375,8 +406,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             
             txtTotal.setText(String.valueOf(df.format(total)));
            
-            
-            
             txtCod.setText(null);
             txtDescProd.setText(null);
             txtQtd.setText("1,00");
@@ -386,6 +415,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             txtSubt.setBackground(null);
 
         }
+        */
     }//GEN-LAST:event_txtSubtKeyPressed
 
     private void txtSubtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSubtFocusLost
@@ -394,12 +424,57 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSubtFocusLost
 
     private void tblVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVendaMouseClicked
-        // TODO add your handling code here:   
+        // TODO add your handling code here:  
+        
     }//GEN-LAST:event_tblVendaMouseClicked
 
     private void tblVendaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblVendaFocusGained
-        // TODO add your handling code here:
+        // TODO add your handling code here:  
     }//GEN-LAST:event_tblVendaFocusGained
+
+    private void tblVendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVendaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_DELETE){
+            
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            dialogButton = JOptionPane.showConfirmDialog (null, "Deseja Realmente Excluir o Produto da Venda?",
+                    "ATENÇÃO", dialogButton);
+            if (dialogButton == JOptionPane.YES_OPTION) {
+                //((DefaultTableModel) tblVenda.getModel()).removeRow(tblVenda.getSelectedRow());
+                if(tblVenda.getSelectedRow() != -1){
+                tableModel.removeRow(tblVenda.getSelectedRow());
+                }
+                DecimalFormat df = new DecimalFormat("#,##0.00");
+                try {
+                    double soma = 0;
+                    for (int i = 0; i < tblVenda.getColumnCount(); i++) {
+                        //Double valorAux = Double.parseDouble(tblVenda.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
+                        Double valorAux = Double.parseDouble(tblVenda.getValueAt(i, 4).toString());
+                        soma+= valorAux.doubleValue();
+                        
+                    }
+                    txtTotal.setText(String.valueOf(soma));
+                    
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                
+                
+                /*
+                DecimalFormat df = new DecimalFormat("#,##0.00");
+                Double count = 0.0;
+                for (int i =0; i<tblVenda.getRowCount()-1; i++){
+                    count+=Double.parseDouble(tblVenda.getValueAt(i, 4).toString().replace(".", "").replace(",", ".")); 
+                }
+                ((DefaultTableModel) tblVenda.getModel()).removeRow(tblVenda.getSelectedRow());
+                txtTotal.setText(String.valueOf(df.format(count)));
+                System.out.println(count);
+                */
+            }
+
+        }
+    }//GEN-LAST:event_tblVendaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
