@@ -381,41 +381,16 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             
         }
         
-        
-        
-        
-        /*
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-        
-            DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
-            
-            modelo.addRow(new Object[]{
-                txtCod.getText(),
-                txtDescProd.getText(),
-                txtQtd.getText(),
-                txtVunit.getText(),
-                txtSubt.getText()
-            });
-            
-            Double vSubTotal = Double.parseDouble(txtSubt.getText().replace(".", "").replace(",", "."));
-            
-            Double vTotal = Double.parseDouble(txtTotal.getText().replace(".", "").replace(",", "."));
-            
-            DecimalFormat df = new DecimalFormat("#,##0.00");
-            Double total = vTotal + vSubTotal;
-            
-            txtTotal.setText(String.valueOf(df.format(total)));
-           
-            txtCod.setText(null);
-            txtDescProd.setText(null);
-            txtQtd.setText("1,00");
-            txtVunit.setText(null);
-            txtSubt.setText(null);
-            txtCod.requestFocus();
-            txtSubt.setBackground(null);
+        txtCod.setText(null);
+        txtDescProd.setText(null);
+        txtQtd.setText("1,00");
+        txtVunit.setText(null);
+        txtSubt.setText(null);
+        txtCod.requestFocus();
+        txtSubt.setBackground(null);
 
-        }
-        */
+        
+        
     }//GEN-LAST:event_txtSubtKeyPressed
 
     private void txtSubtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSubtFocusLost
