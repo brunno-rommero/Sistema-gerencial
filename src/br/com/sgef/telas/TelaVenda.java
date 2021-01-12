@@ -391,6 +391,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
         
         
+        
     }//GEN-LAST:event_txtSubtKeyPressed
 
     private void txtSubtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSubtFocusLost

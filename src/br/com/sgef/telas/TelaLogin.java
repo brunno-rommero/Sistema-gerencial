@@ -9,6 +9,7 @@ import java.sql.*;
 import br.com.sgef.dal.ModuloConexao;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.model.User;
+import java.awt.event.KeyEvent;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -199,13 +200,17 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-        logar();
+        // TODO add your handling code here:  
+            logar();
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jToggleButton1KeyPressed
         // TODO add your handling code here:
-        logar();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            logar();
+        }
+        
     }//GEN-LAST:event_jToggleButton1KeyPressed
 
     /**
