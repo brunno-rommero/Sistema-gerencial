@@ -14,6 +14,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,8 +41,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtQtd.setDocument(new NumeroDocument(9,2));
         txtQtd.setText("1,00");
         txtTotal.setText("0,00");
-        
-        
+
         tblVenda.setModel(tableModel);
         tableModel.setTableColumnModel(tblVenda.getColumnModel());
           
@@ -84,6 +85,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         txtTotal = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        txttot = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -190,6 +192,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Total :");
 
+        txttot.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -237,8 +241,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(223, 223, 223)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txttot, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(10, 10, 10)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,12 +289,17 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(txttot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -379,19 +391,18 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
             tableModel.addRow(itV);
             
-        }
-        
-        txtCod.setText(null);
-        txtDescProd.setText(null);
-        txtQtd.setText("1,00");
-        txtVunit.setText(null);
-        txtSubt.setText(null);
-        txtCod.requestFocus();
-        txtSubt.setBackground(null);
+            txtCod.setText(null);
+            txtDescProd.setText(null);
+            txtQtd.setText("1,00");
+            txtVunit.setText(null);
+            txtSubt.setText(null);
+            txtCod.requestFocus();
+            txtSubt.setBackground(null);
 
-        
-        
-        
+            txtTotal.setText(tableModel.CalculaTotal());
+            
+        }
+ 
     }//GEN-LAST:event_txtSubtKeyPressed
 
     private void txtSubtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSubtFocusLost
@@ -419,23 +430,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 //((DefaultTableModel) tblVenda.getModel()).removeRow(tblVenda.getSelectedRow());
                 if(tblVenda.getSelectedRow() != -1){
                 tableModel.removeRow(tblVenda.getSelectedRow());
-                }
-                DecimalFormat df = new DecimalFormat("#,##0.00");
-                try {
-                    double soma = 0;
-                    for (int i = 0; i < tblVenda.getColumnCount(); i++) {
-                        //Double valorAux = Double.parseDouble(tblVenda.getValueAt(i, 4).toString().replace(".", "").replace(",", "."));
-                        Double valorAux = Double.parseDouble(tblVenda.getValueAt(i, 4).toString());
-                        soma+= valorAux.doubleValue();
-                        
-                    }
-                    txtTotal.setText(String.valueOf(soma));
-                    
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 
-                
+                //calcula o txt Total
+                txtTotal.setText(tableModel.CalculaTotal());
+                }
+ 
                 
                 /*
                 DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -477,5 +476,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtSubt;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtVunit;
+    private javax.swing.JFormattedTextField txttot;
     // End of variables declaration//GEN-END:variables
 }

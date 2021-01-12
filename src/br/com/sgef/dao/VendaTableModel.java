@@ -77,4 +77,15 @@ public class VendaTableModel extends AbstractTableModel{
         
     }
     
+    public String CalculaTotal() {
+        
+        Double soma = 0.0;
+        for ( int i = 0; i < this.getRowCount(); i++){
+            soma += Double.parseDouble( this.getValueAt(i, 4).toString());
+        }
+       
+        return soma.toString();
+    }
+    
+    
 }
