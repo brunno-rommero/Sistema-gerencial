@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 
@@ -398,8 +399,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             txtSubt.setText(null);
             txtCod.requestFocus();
             txtSubt.setBackground(null);
-
-            txtTotal.setText(tableModel.CalculaTotal());
+            
+            
+            NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            Double total = Double.parseDouble(tableModel.CalculaTotal().toString());
+            txtTotal.setText(nf.format(total));
             
         }
  
@@ -432,7 +436,12 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 tableModel.removeRow(tblVenda.getSelectedRow());
                 
                 //calcula o txt Total
-                txtTotal.setText(tableModel.CalculaTotal());
+                NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
+                Double total = Double.parseDouble(tableModel.CalculaTotal().toString());
+                txtTotal.setText(nf.format(total));
+                
+                
+               // txtTotal.setText(tableModel.CalculaTotal());
                 }
  
                 
