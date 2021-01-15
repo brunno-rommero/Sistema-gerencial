@@ -46,7 +46,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
         tblVenda.setModel(tableModel);
         tableModel.setTableColumnModel(tblVenda.getColumnModel());
-          
+  
         
     }
     
@@ -250,9 +250,9 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                         .addGap(120, 120, 120)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -296,7 +296,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                     .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -320,9 +320,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             if(txtCod.getText().isEmpty()){
                 
                 //abrir consulta de cliente
-                TelaCadProduto cadProd = new TelaCadProduto();
-                getParent().add(cadProd);
-                cadProd.setVisible(true);
+                TelaConsultaProd consultaProd = new TelaConsultaProd();
+                getParent().add(consultaProd);
+                consultaProd.setVisible(true);
+                consultaProd.txtPesquisar.grabFocus();
+                consultaProd.setPosicao();
                 
                 
             }else{
@@ -442,9 +444,12 @@ public class TelaVenda extends javax.swing.JInternalFrame {
              if(txtCodCli.getText().isEmpty()){
                  
                  //abrir tela de consulta de cliente
-                TelaCadCli cadCli = new TelaCadCli();
-                getParent().add(cadCli);
-                cadCli.setVisible(true);
+                TelaConsultaClient consultaCli = new TelaConsultaClient();
+                getParent().add(consultaCli);
+                consultaCli.setVisible(true);
+                consultaCli.txtPesquisar.grabFocus();
+                consultaCli.setPosicao();
+               
                  
              }else{
                  
