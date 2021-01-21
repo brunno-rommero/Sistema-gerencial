@@ -15,11 +15,11 @@ import java.sql.Date;
 public class Venda {
     
     private int id;
-    private Produto produto;
-    private BigDecimal valorTotal;
+    private int cliente;
+    private Double qtd_item;
     private Date dataVenda;
     private String formaPagamento;
-    private int qtdParcelas;
+    private Double valorTotal;
 
     /**
      * @return the id
@@ -36,31 +36,17 @@ public class Venda {
     }
 
     /**
-     * @return the produto
+     * @return the cliente
      */
-    public Produto getProduto() {
-        return produto;
+    public int getCliente() {
+        return cliente;
     }
 
     /**
-     * @param produto the produto to set
+     * @param cliente the cliente to set
      */
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    /**
-     * @return the valorTotal
-     */
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    /**
-     * @param valorTotal the valorTotal to set
-     */
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setCliente(int cliente) {
+        this.cliente = cliente;
     }
 
     /**
@@ -92,17 +78,33 @@ public class Venda {
     }
 
     /**
-     * @return the qtdParcelas
+     * @return the valorTotal
      */
-    public int getQtdParcelas() {
-        return qtdParcelas;
+    public Double getValorTotal() {
+        return valorTotal;
     }
 
     /**
-     * @param qtdParcelas the qtdParcelas to set
+     * @param valorTotal the valorTotal to set
      */
-    public void setQtdParcelas(int qtdParcelas) {
-        this.qtdParcelas = qtdParcelas;
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
+
+    /**
+     * @return the qtd_item
+     */
+    public Double getQtd_item() {
+        return qtd_item;
+    }
+
+    /**
+     * @param qtd_item the qtd_item to set
+     */
+    public void setQtd_item(Double qtd_item) {
+        this.qtd_item = qtd_item;
+    }
+
+    
       
 }

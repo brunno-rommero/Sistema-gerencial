@@ -86,6 +86,15 @@ public class VendaTableModel extends AbstractTableModel{
        
         return soma.toString();
     }
+    public String CalculaQtd() {
+        
+       Double soma = 0.0;
+        for ( int i = 0; i < this.getRowCount(); i++){
+            soma += Double.parseDouble( this.getValueAt(i, 2).toString());
+        }
+       
+        return soma.toString();
+    }
     
     
 }

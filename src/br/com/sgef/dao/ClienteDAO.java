@@ -172,7 +172,6 @@ public class ClienteDAO {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Algo deu errado !!!");
             e.printStackTrace();
-
         }
     
     }

@@ -31,14 +31,14 @@ public class VendaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO venda ( id_produto, dataVenda, formaPag, " +
-                                        "qtdParcelas, valorTotal)\n" +
+            stmt = con.prepareStatement("INSERT INTO venda ( id_cliente, qtd_item, dataVenda, formaPag, " +
+                                        "valorTotal)\n" +
                                         "VALUES (?, ?, ?, ?, ?)");
-            stmt.setObject(1, venda.getProduto());
-            stmt.setDate(2, venda.getDataVenda());
-            stmt.setString(3, venda.getFormaPagamento());
-            stmt.setInt(4, venda.getQtdParcelas());
-            stmt.setBigDecimal(5, venda.getValorTotal());
+            stmt.setInt(1, venda.getCliente());
+            stmt.setDouble(2, venda.getQtd_item());
+            stmt.setDate(3, venda.getDataVenda());
+            stmt.setString(4, venda.getFormaPagamento());
+            stmt.setDouble(5, venda.getValorTotal());
 
             stmt.executeUpdate();
 

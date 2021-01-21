@@ -8,14 +8,21 @@ package br.com.sgef.telas;
 import br.com.sgef.dao.ClienteDAO;
 import br.com.sgef.util.NumeroDocument;
 import br.com.sgef.dao.ProdutoDAO;
+import br.com.sgef.dao.VendaDAO;
 import br.com.sgef.dao.VendaTableModel;
 import br.com.sgef.model.ItemVenda;
+import br.com.sgef.model.Venda;
 import br.com.sgef.util.SoNumeros;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 
@@ -193,10 +200,16 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         jLabel8.setText("Qtd Parcelas");
 
         jButton2.setText("Finalizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         txtTotal.setEditable(false);
         txtTotal.setEnabled(false);
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Total :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,7 +290,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -296,7 +309,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                     .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -467,6 +480,29 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         
         
     }//GEN-LAST:event_txtCodCliKeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        VendaDAO dao = new VendaDAO();
+        Venda venda = new Venda();
+        Date data = new Date();
+        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+       
+        venda.setCliente(Integer.parseInt(txtCodCli.getText()));
+        venda.setQtd_item(Double.parseDouble(tableModel.CalculaQtd()));
+        venda.setDataVenda(java.sql.Date.valueOf(formatador.format(data)));
+        venda.setFormaPagamento((String) cboFormaPag.getSelectedItem());
+        venda.setValorTotal(45.5);
+        
+        dao.adicionar(venda);
+        
+        
+        
+        JOptionPane.showMessageDialog(null, formatador.format(data));
+        
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
