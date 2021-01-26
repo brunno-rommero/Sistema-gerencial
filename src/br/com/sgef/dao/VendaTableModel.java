@@ -43,7 +43,7 @@ public class VendaTableModel extends AbstractTableModel{
             case 0:
                 return dados.get(linha).getCodigo();
             case 1:
-                return dados.get(linha).getProduto();
+                return dados.get(linha).getDescProd();
             case 2:
                 return dados.get(linha).getQuantidade();
             case 3:

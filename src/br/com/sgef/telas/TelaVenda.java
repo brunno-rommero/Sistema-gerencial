@@ -11,7 +11,9 @@ import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.dao.VendaDAO;
 import br.com.sgef.dao.VendaTableModel;
 import br.com.sgef.model.ItemVenda;
+import br.com.sgef.model.Produto;
 import br.com.sgef.model.Venda;
+import br.com.sgef.util.NumberRenderer;
 import br.com.sgef.util.SoNumeros;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,10 +21,7 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 
@@ -89,8 +88,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtCliente = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         txtTotal = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -157,7 +154,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -181,7 +178,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblVenda);
 
-        cboFormaPag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão", "Cheque", "A prazo" }));
+        cboFormaPag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão", "Cheque" }));
 
         txtCodCli.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -196,8 +193,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         jButton1.setText("Buscar");
 
         jLabel7.setText("Forma de Pagamento");
-
-        jLabel8.setText("Qtd Parcelas");
 
         jButton2.setText("Finalizar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -252,15 +247,10 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(120, 120, 120)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)))
+                        .addGap(262, 262, 262)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,15 +291,12 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                     .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -385,15 +372,43 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         ItemVenda itV = new ItemVenda();
         
+        Produto prod = new Produto();
+        prod.setId(Integer.parseInt(txtCod.getText()));
+        prod.setDescricao(txtDescProd.getText());
+        
+        
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-           
+            
             itV.setCodigo(Integer.parseInt(txtCod.getText()));
-            itV.setProduto(txtDescProd.getText());
-            itV.setQuantidade(Double.parseDouble(txtQtd.getText().replaceAll(",00", "")));
-            itV.setValorUnit(Double.parseDouble(txtVunit.getText().replace(",", ".")));
-            itV.setSubtotal(Double.parseDouble(txtSubt.getText().replace(",", ".")));
-
+            itV.setidProduto(prod.getId());
+            itV.setDescProd(prod.getDescricao());
+            itV.setQuantidade(Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", ".")));
+            itV.setValorUnit(Double.parseDouble(txtVunit.getText().replace(".", "").replace(",", ".")));
+            itV.setSubtotal(Double.parseDouble(txtSubt.getText().replace(".", "").replace(",", ".")));
+            
+            //fazer condição se ja existe o produto na jtable e apenas somar a quantidade
+            for(int linha=0; linha<tableModel.getRowCount();linha++){
+                int valorColuna= (Integer) tableModel.getValueAt(linha, 0);
+                if(valorColuna == prod.getId()){
+                    
+                    Double soma;
+                    Double quantnova = Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", "."));
+                    Double lancada = Double.parseDouble(tableModel.getValueAt(linha, 2).toString());
+                    soma = lancada + quantnova;
+                    tableModel.setValueAt(soma, linha, 2);
+                    
+                    System.out.println("Quantidade: " + (lancada + quantnova));
+                    
+                }
+            }
+            
+            
+            
+            
+            
+            
             tableModel.addRow(itV);
+            
             
             txtCod.setText(null);
             txtDescProd.setText(null);
@@ -402,7 +417,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             txtSubt.setText(null);
             txtCod.requestFocus();
             txtSubt.setBackground(null);
-            
             
             NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
             Double total = Double.parseDouble(tableModel.CalculaTotal().toString());
@@ -476,9 +490,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
              
              
          }
-        
-        
-        
+   
     }//GEN-LAST:event_txtCodCliKeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -487,21 +499,16 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         Venda venda = new Venda();
         Date data = new Date();
         SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
-       
+        Double total = Double.parseDouble(tableModel.CalculaTotal());
+        
         venda.setCliente(Integer.parseInt(txtCodCli.getText()));
         venda.setQtd_item(Double.parseDouble(tableModel.CalculaQtd()));
         venda.setDataVenda(java.sql.Date.valueOf(formatador.format(data)));
         venda.setFormaPagamento((String) cboFormaPag.getSelectedItem());
-        venda.setValorTotal(45.5);
+        venda.setValorTotal(total);
         
         dao.adicionar(venda);
-        
-        
-        
-        JOptionPane.showMessageDialog(null, formatador.format(data));
-        
-        
-        
+     
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -516,10 +523,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTable tblVenda;
     private javax.swing.JTextField txtCliente;
     public javax.swing.JTextField txtCod;

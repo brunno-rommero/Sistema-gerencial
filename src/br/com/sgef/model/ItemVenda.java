@@ -12,10 +12,13 @@ package br.com.sgef.model;
 public class ItemVenda {
     
     private int codigo;
-    private String produto;
+    private int idVenda;
+    private int idProduto;
+    private String descProd;
     private Double quantidade;
     private Double valorUnit;
     private Double subtotal;
+    private Double total;
 
     /**
      * @return the codigo
@@ -32,17 +35,31 @@ public class ItemVenda {
     }
 
     /**
-     * @return the produto
+     * @return the idVenda
      */
-    public String getProduto() {
-        return produto;
+    public int getIdVenda() {
+        return idVenda;
     }
 
     /**
-     * @param produto the produto to set
+     * @param idVenda the idVenda to set
      */
-    public void setProduto(String produto) {
-        this.produto = produto;
+    public void setIdVenda(int idVenda) {
+        this.idVenda = idVenda;
+    }
+
+    /**
+     * @return the idProduto
+     */
+    public int getidProduto() {
+        return idProduto;
+    }
+
+    /**
+     * @param idProduto the idProduto to set
+     */
+    public void setidProduto(int produto) {
+        this.idProduto = idProduto;
     }
 
     /**
@@ -86,5 +103,37 @@ public class ItemVenda {
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
+
+    /**
+     * @return the total
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    /**
+     * @return the descProd
+     */
+    public String getDescProd() {
+        return descProd;
+    }
+
+    /**
+     * @param descProd the descProd to set
+     */
+    public void setDescProd(String descProd) {
+        this.descProd = descProd;
+    }
+
+
+
+   
     
 }

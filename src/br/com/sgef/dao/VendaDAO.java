@@ -6,7 +6,6 @@
 package br.com.sgef.dao;
 
 import br.com.sgef.dal.ConnectionFactory;
-import br.com.sgef.model.Produto;
 import br.com.sgef.model.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,19 +30,19 @@ public class VendaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO venda ( id_cliente, qtd_item, dataVenda, formaPag, " +
-                                        "valorTotal)\n" +
-                                        "VALUES (?, ?, ?, ?, ?)");
+
+            stmt = con.prepareCall("{call addVenda(?, ?, ?, ?, ?)}"); // ?, ?, ?, ? stored procedure addVenda adc itens tbm
             stmt.setInt(1, venda.getCliente());
             stmt.setDouble(2, venda.getQtd_item());
             stmt.setDate(3, venda.getDataVenda());
             stmt.setString(4, venda.getFormaPagamento());
             stmt.setDouble(5, venda.getValorTotal());
 
-            stmt.executeUpdate();
+            stmt.execute();
 
             JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
         } catch (SQLException ex) {
+            ex.printStackTrace();
             
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
