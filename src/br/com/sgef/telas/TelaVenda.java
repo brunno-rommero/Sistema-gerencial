@@ -391,24 +391,19 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 int valorColuna= (Integer) tableModel.getValueAt(linha, 0);
                 if(valorColuna == prod.getId()){
                     
-                    Double soma;
+                    Double soma = 0.0;
+                    
                     Double quantnova = Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", "."));
                     Double lancada = Double.parseDouble(tableModel.getValueAt(linha, 2).toString());
                     soma = lancada + quantnova;
-                    tableModel.setValueAt(soma, linha, 2);
-                    
-                    System.out.println("Quantidade: " + (lancada + quantnova));
+                    itV.setQuantidade(soma);
+                    itV.setSubtotal(soma * itV.getValorUnit());
+                    tableModel.removeRow(linha);
                     
                 }
             }
             
-            
-            
-            
-            
-            
             tableModel.addRow(itV);
-            
             
             txtCod.setText(null);
             txtDescProd.setText(null);
