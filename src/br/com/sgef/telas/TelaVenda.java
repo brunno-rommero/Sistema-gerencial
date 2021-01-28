@@ -191,6 +191,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtCliente.setEditable(false);
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Forma de Pagamento");
 
@@ -247,9 +252,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7)))
+                            .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
                         .addGap(262, 262, 262)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -503,8 +507,34 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         venda.setValorTotal(total);
         
         dao.adicionar(venda);
-     
+        
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        ItemVenda itV = new ItemVenda();
+        
+        //fazer condição se ja existe o produto na jtable e apenas somar a quantidade
+        for(int linha=0; linha<tableModel.getRowCount();linha++){
+            int valorColuna= (Integer) tableModel.getValueAt(linha, 0);
+            
+            itV.setCodigo(Integer.parseInt(tableModel.getValueAt(linha, 0).toString()));
+            itV.setDescProd(tableModel.getValueAt(linha, 1).toString());
+            itV.setQuantidade(Double.parseDouble(tableModel.getValueAt(linha, 2).toString()));
+            itV.setValorUnit(Double.parseDouble(tableModel.getValueAt(linha, 3).toString()));
+            itV.setSubtotal(Double.parseDouble(tableModel.getValueAt(linha, 4).toString()));
+            
+            System.out.println("Cod: " + itV.getCodigo());
+            System.out.println("Desc: " + itV.getDescProd());
+            System.out.println("Quant: " + itV.getQuantidade());
+            System.out.println("Vlr Unit: " + itV.getValorUnit());
+            System.out.println("Subtotal: " + itV.getSubtotal());
+
+        }
+ 
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
