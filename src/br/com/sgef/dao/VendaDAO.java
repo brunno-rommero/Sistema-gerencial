@@ -6,6 +6,7 @@
 package br.com.sgef.dao;
 
 import br.com.sgef.dal.ConnectionFactory;
+import br.com.sgef.model.ItemVenda;
 import br.com.sgef.model.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ public class VendaDAO {
     ResultSet rs = null;
     
     //esse método para adicionar
-    public void adicionar(Venda venda) {
+    public void adicionar(Venda venda, ItemVenda itV) {
         
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -37,6 +38,7 @@ public class VendaDAO {
             stmt.setDate(3, venda.getDataVenda());
             stmt.setString(4, venda.getFormaPagamento());
             stmt.setDouble(5, venda.getValorTotal());
+            
 
             stmt.execute();
 
@@ -48,6 +50,34 @@ public class VendaDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
 
+    }
+    
+    public int pegaIdVenda(){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        Venda venda = new Venda();
+        int Cod = 0;
+        
+        try {
+            stmt = con.prepareStatement("SELECT AUTO_INCREMENT FROM information_schema.tables\n" +
+                                        "WHERE TABLE_NAME = 'venda' AND table_schema = 'sist'");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                venda.setId(rs.getInt("AUTO_INCREMENT"));  
+                Cod = venda.getId();
+            }
+            
+            
+        }catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
+        return Cod;
+        
     }
 
 

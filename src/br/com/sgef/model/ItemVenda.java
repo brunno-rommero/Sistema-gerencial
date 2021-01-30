@@ -51,15 +51,29 @@ public class ItemVenda {
     /**
      * @return the idProduto
      */
-    public int getidProduto() {
+    public int getIdProduto() {
         return idProduto;
     }
 
     /**
      * @param idProduto the idProduto to set
      */
-    public void setidProduto(int produto) {
+    public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
+    }
+
+    /**
+     * @return the descProd
+     */
+    public String getDescProd() {
+        return descProd;
+    }
+
+    /**
+     * @param descProd the descProd to set
+     */
+    public void setDescProd(String descProd) {
+        this.descProd = descProd;
     }
 
     /**
@@ -118,22 +132,5 @@ public class ItemVenda {
         this.total = total;
     }
 
-    /**
-     * @return the descProd
-     */
-    public String getDescProd() {
-        return descProd;
-    }
-
-    /**
-     * @param descProd the descProd to set
-     */
-    public void setDescProd(String descProd) {
-        this.descProd = descProd;
-    }
-
-
-
-   
     
 }

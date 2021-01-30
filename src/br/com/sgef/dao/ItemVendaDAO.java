@@ -10,6 +10,7 @@ import br.com.sgef.model.ItemVenda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -21,10 +22,29 @@ public class ItemVendaDAO {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-    public void addItVenda(ItemVenda itVenda) {
+    public void addItVenda(ItemVenda itV) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
+        try {
+
+            stmt = con.prepareCall("{call addItVendas(?, ?, ?, ?, ?, ?, ?)}");
+            stmt.setInt(1, itV.getIdVenda());
+            stmt.setInt(2, itV.getIdProduto());
+            stmt.setString(3, itV.getDescProd());
+            stmt.setDouble(4, itV.getQuantidade());
+            stmt.setDouble(5, itV.getValorUnit());
+            stmt.setDouble(6, itV.getSubtotal());
+            stmt.setDouble(7, itV.getTotal());
+
+            stmt.execute();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
         
         
         

@@ -5,12 +5,10 @@
         <group>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/model/ItemVenda.java</file>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/model/Venda.java</file>
-            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/util/NumberRenderer.java</file>
-            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/dao/VendaDAO.java</file>
+            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/dao/ItemVendaDAO.java</file>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/telas/TelaVenda.java</file>
-            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/util/FormatRenderer.java</file>
             <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/dao/VendaTableModel.java</file>
-            <file>file:/C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/src/br/com/sgef/util/NumeroDocument.java</file>
         </group>
     </open-files>
 </project-private>
