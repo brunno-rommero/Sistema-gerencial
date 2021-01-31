@@ -25,7 +25,7 @@ public class VendaDAO {
     ResultSet rs = null;
     
     //esse método para adicionar
-    public void adicionar(Venda venda, ItemVenda itV) {
+    public void adicionar(Venda venda) {
         
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

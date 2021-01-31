@@ -27,7 +27,7 @@ public class ItemVendaDAO {
         PreparedStatement stmt = null;
         
         try {
-
+            
             stmt = con.prepareCall("{call addItVendas(?, ?, ?, ?, ?, ?, ?)}");
             stmt.setInt(1, itV.getIdVenda());
             stmt.setInt(2, itV.getIdProduto());
