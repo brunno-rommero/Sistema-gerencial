@@ -68,7 +68,7 @@ public class VendaTableModel extends AbstractTableModel{
     public void setTableColumnModel(TableColumnModel columnModel){
         
         
-        columnModel.getColumn(2).setCellRenderer(NumberRenderer.getNumberRenderer(0));
+        //columnModel.getColumn(2).setCellRenderer(NumberRenderer.getNumberRenderer(0));
         columnModel.getColumn(3).setCellRenderer(NumberRenderer.getCurrencyRenderer());
         columnModel.getColumn(4).setCellRenderer(NumberRenderer.getCurrencyRenderer());
         

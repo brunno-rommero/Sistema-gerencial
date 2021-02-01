@@ -12,7 +12,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -77,6 +82,26 @@ public class VendaDAO {
         }
         
         return Cod;
+        
+    }
+    
+    public void abrirListaProd(int venda){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir lista de produtos ?", "Atenção", JOptionPane.YES_NO_OPTION);
+         if (confirma == JOptionPane.YES_OPTION) {
+            try {
+                Map parameters = new HashMap(); 
+                parameters.put("IdVenda", venda);
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/ListaVenda.jasper", parameters, con);
+                JasperViewer.viewReport(print, false);
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+         }
         
     }
 

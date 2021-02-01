@@ -53,6 +53,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
 
@@ -156,6 +157,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Mov. Venda");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu4);
 
         jMenu2.setText("Sobre  ");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -322,6 +331,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pag.setPosicao();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        // TODO add your handling code here:
+        TelaMovVenda movVenda = new TelaMovVenda();
+        movVenda.setVisible(true);
+
+        desktop.add(movVenda);
+        movVenda.setPosicao();
+    }//GEN-LAST:event_jMenu4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -364,6 +382,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;

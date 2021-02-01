@@ -45,9 +45,32 @@ public class ItemVendaDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+   
+    }
+    
+    public void baixaEstoque(ItemVenda itV){
         
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            
+            stmt = con.prepareCall("{call saidaEstoque(?, ?)}");
+            stmt.setInt(1, itV.getIdProduto());
+            stmt.setDouble(2, itV.getQuantidade());
+
+            stmt.execute();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
         
         
     }
+    
+    
     
 }

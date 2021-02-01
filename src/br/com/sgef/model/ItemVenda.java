@@ -15,7 +15,7 @@ public class ItemVenda {
     private int idVenda;
     private int idProduto;
     private String descProd;
-    private Double quantidade;
+    private int quantidade;
     private Double valorUnit;
     private Double subtotal;
     private Double total;
@@ -79,14 +79,14 @@ public class ItemVenda {
     /**
      * @return the quantidade
      */
-    public Double getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
     /**
      * @param quantidade the quantidade to set
      */
-    public void setQuantidade(Double quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 

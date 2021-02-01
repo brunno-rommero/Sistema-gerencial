@@ -22,8 +22,12 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  *
@@ -40,14 +44,13 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     public TelaVenda() {
         initComponents();
         txtCod.setDocument(new SoNumeros());
+        txtQtd.setDocument(new SoNumeros());
+        txtQtd.setText("1");
         txtCodCli.setDocument(new SoNumeros());
         // as linhas abaixo coloca mascara monetária
         txtVunit.setHorizontalAlignment(txtVunit.RIGHT);
         txtVunit.setDocument(new NumeroDocument(9,2));
         
-        txtQtd.setHorizontalAlignment(txtQtd.RIGHT);
-        txtQtd.setDocument(new NumeroDocument(9,2));
-        txtQtd.setText("1,00");
         txtTotal.setText("0,00");
 
         tblVenda.setModel(tableModel);
@@ -364,7 +367,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){ 
             Double vUnit = Double.parseDouble(txtVunit.getText().replace(".", "").replace(",", "."));
-            Double qtd = Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", "."));
+            int qtd = Integer.parseInt(txtQtd.getText());
 
             DecimalFormat df = new DecimalFormat("#,##0.00");
             
@@ -392,7 +395,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             
             itV.setIdProduto(id);
             itV.setDescProd(prod.getDescricao());
-            itV.setQuantidade(Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", ".")));
+            itV.setQuantidade(Integer.parseInt(txtQtd.getText()));
             //itV.setValorUnit(Double.parseDouble(txtVunit.getText().replace(".", "").replace(",", ".")));
             itV.setValorUnit(Double.parseDouble(pdao.pesquisa_por_id((Integer) id).getPvenda().toString()));
             itV.setSubtotal(Double.parseDouble(txtSubt.getText().replace(".", "").replace(",", ".")));
@@ -402,10 +405,10 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 int valorColuna= (Integer) tableModel.getValueAt(linha, 0);
                 if(valorColuna == prod.getId()){
                     
-                    Double soma = 0.0;
+                    int soma;
                     
-                    Double quantnova = Double.parseDouble(txtQtd.getText().replace(".", "").replace(",", "."));
-                    Double lancada = Double.parseDouble(tableModel.getValueAt(linha, 2).toString());
+                    int quantnova = Integer.parseInt(txtQtd.getText());
+                    int lancada = Integer.parseInt(tableModel.getValueAt(linha, 2).toString());
                     soma = lancada + quantnova;
                     itV.setQuantidade(soma);
                     itV.setSubtotal(soma * itV.getValorUnit());
@@ -419,7 +422,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             
             txtCod.setText(null);
             txtDescProd.setText(null);
-            txtQtd.setText("1,00");
+            txtQtd.setText("1");
             txtVunit.setText(null);
             txtSubt.setText(null);
             txtCod.requestFocus();
@@ -482,20 +485,15 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 getParent().add(consultaCli);
                 consultaCli.setVisible(true);
                 consultaCli.txtPesquisar.grabFocus();
-                consultaCli.setPosicao();
-               
-                 
-             }else{
-                 
-                 ClienteDAO dao = new ClienteDAO();
-                 
-                 Integer id = Integer.parseInt(txtCodCli.getText());   
-                 txtCliente.setText(dao.pesquisa_por_id((Integer) id).getNome()); 
-                 cboFormaPag.requestFocus();
- 
-             }
-             
-             
+                consultaCli.setPosicao();      
+            }else{ 
+                ClienteDAO dao = new ClienteDAO();
+
+                Integer id = Integer.parseInt(txtCodCli.getText());   
+                txtCliente.setText(dao.pesquisa_por_id((Integer) id).getNome()); 
+                cboFormaPag.requestFocus();
+            }
+   
          }
    
     }//GEN-LAST:event_txtCodCliKeyPressed
@@ -519,32 +517,35 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             venda.setValorTotal(total);
 
             dao.adicionar(venda);
-        }
-        ItemVenda itV = new ItemVenda();
-        ItemVendaDAO itVdao = new ItemVendaDAO();
-        
-        //fazer condição se ja existe o produto na jtable e apenas somar a quantidade
-        for(int linha=0; linha<tableModel.getRowCount();linha++){
-            int valorColuna = (Integer) tableModel.getValueAt(linha, 0);
             
-            itV.setIdVenda(Integer.parseInt(txtVenda.getText()));
-            itV.setIdProduto(valorColuna);
-            itV.setDescProd(tableModel.getValueAt(linha, 1).toString());
-            itV.setQuantidade(Double.parseDouble(tableModel.getValueAt(linha, 2).toString()));
-            itV.setValorUnit(Double.parseDouble(tableModel.getValueAt(linha, 3).toString()));
-            itV.setSubtotal(Double.parseDouble(tableModel.getValueAt(linha, 4).toString()));
-            itV.setTotal(Double.parseDouble(tableModel.CalculaTotal()));
-            
-            itVdao.addItVenda(itV);
-            
-        }
         
-       
-        int l=0;
-        while(tableModel.getRowCount()>l){
-            tableModel.removeRow(l);
-        }
+            ItemVenda itV = new ItemVenda();
+            ItemVendaDAO itVdao = new ItemVendaDAO();
+
+            //fazer condição se ja existe o produto na jtable e apenas somar a quantidade
+            for(int linha=0; linha<tableModel.getRowCount();linha++){
+                int valorColuna = (Integer) tableModel.getValueAt(linha, 0);
+
+                itV.setIdVenda(Integer.parseInt(txtVenda.getText()));
+                itV.setIdProduto(valorColuna);
+                itV.setDescProd(tableModel.getValueAt(linha, 1).toString());
+                itV.setQuantidade(Integer.parseInt(tableModel.getValueAt(linha, 2).toString()));
+                itV.setValorUnit(Double.parseDouble(tableModel.getValueAt(linha, 3).toString()));
+                itV.setSubtotal(Double.parseDouble(tableModel.getValueAt(linha, 4).toString()));
+                itV.setTotal(Double.parseDouble(tableModel.CalculaTotal()));
+
+                itVdao.addItVenda(itV);
+                itVdao.baixaEstoque(itV);
+
+            }
+
+            int l=0;
+            while(tableModel.getRowCount()>l){
+                tableModel.removeRow(l);
+            }
+            dao.abrirListaProd(Integer.parseInt(txtVenda.getText()));
         
+        }
         
         txtVenda.setText(String.valueOf(dao.pegaIdVenda()));
         txtTotal.setText("0,00");
