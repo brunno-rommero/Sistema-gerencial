@@ -7,7 +7,9 @@ package br.com.sgef.telas;
 
 import java.sql.*;
 import br.com.sgef.dal.ModuloConexao;
+import br.com.sgef.dao.UserComboModelDAO;
 import br.com.sgef.dao.UserDAO;
+import br.com.sgef.dao.VendaTableModel;
 import br.com.sgef.model.User;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
@@ -19,20 +21,30 @@ import javax.swing.JOptionPane;
  * @author BrunoRomeroAlencar
  */
 public class TelaLogin extends javax.swing.JFrame {
-
+    
+    private UserComboModelDAO userComboModel;
+    
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;    
-    
-    
+    User user = new User();
+    UserDAO u = new UserDAO();
     
      public void popuparjcombobox(){
      
-         UserDAO u = new UserDAO();
-         User user = new User();
-         u.pegarTodosUser(user);
+        userComboModel = new UserComboModelDAO();
+        UserDAO Udao = new UserDAO();
+        
+        for (User u : Udao.pegarTodosUsers()) {
+            userComboModel.addUsers(u);
+            jComboBoxUser.setModel(userComboModel); 
+            
+        }
          
-        jComboBoxUser.addItem(u.pegarTodosUser(user));
+       
+         
+        //jComboBoxUser.addItem(u.pegarTodosUser(user));
+        
          
      
      }
@@ -47,11 +59,19 @@ public class TelaLogin extends javax.swing.JFrame {
             
             pst.setString(1,jComboBoxUser.getSelectedItem().toString());
             pst.setString(2,loginPwd.getText());
-            
-            
-            
-            rs = pst.executeQuery();
+
+            ResultSet rs = pst.executeQuery();
+
             if(rs.next()){
+                
+                user.setId(rs.getInt("id"));
+                user.setNome(rs.getString("nome"));
+                user.setUsuario(rs.getString("usuario"));
+                user.setSenha(rs.getString("senha"));
+                user.setperfilUser(rs.getString("perfilUser"));
+                
+                
+                
                 //obtem o perfil de usuario
                 String perfil = rs.getString(5);
                 //System.out.println(perfil);
@@ -60,17 +80,25 @@ public class TelaLogin extends javax.swing.JFrame {
                 TelaPrincipal principal = new TelaPrincipal();
                 principal.setVisible(true);
                 TelaPrincipal.cadMenUser.setEnabled(true);
-                
+                principal.lbCod.setText(String.valueOf(user.getId()));
+                principal.lbUser.setText(String.valueOf(user.getUsuario()));
+                System.setProperty("codigo", String.valueOf(user.getId()));
                 
                 this.dispose();
                 conexao.close();
                 }
                 else{
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);
                 
-                this.dispose();
-                conexao.close();
+                   
+                    
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    principal.lbCod.setText(String.valueOf(user.getId()));
+                    principal.lbUser.setText(String.valueOf(user.getUsuario()));
+                    System.setProperty("codigo", String.valueOf(user.getId()));
+
+                    this.dispose();
+                    conexao.close();
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "Usuario ou Senha Inválildo");
@@ -200,8 +228,10 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:  
-            logar();
+        // TODO add your handling code here: 
+        // setar atributos do objeto usuario para recuperar dentro do sistema.
+          
+        logar();
 
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 

@@ -50,10 +50,17 @@ public class User {
             this.perfilUser= perfilUser;
         }
         
-        
+        /*
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", nome=" + nome + ", usuario=" + usuario + ", senha=" + senha + ", perfilUser=" + perfilUser + "]";
 	}
-
+        */
+        @Override
+	public String toString() {
+            return this.getUsuario();
+        }
+        
+        
+       
 }

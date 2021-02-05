@@ -9,6 +9,8 @@ import br.com.sgef.dao.ClienteDAO;
 import br.com.sgef.dao.ItemVendaDAO;
 import br.com.sgef.util.NumeroDocument;
 import br.com.sgef.dao.ProdutoDAO;
+import br.com.sgef.dao.UserComboModelDAO;
+import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.VendaDAO;
 import br.com.sgef.dao.VendaTableModel;
 import br.com.sgef.model.ItemVenda;
@@ -22,12 +24,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+
+
 
 /**
  *
@@ -58,7 +58,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         
         VendaDAO vdao = new VendaDAO();
         txtVenda.setText(String.valueOf(vdao.pegaIdVenda()));
-   
+
     }
     
     public void setPosicao() {
@@ -97,6 +97,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         txtVenda = new javax.swing.JTextField();
         Venda = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -216,6 +217,13 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
         Venda.setText("Venda");
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -254,10 +262,16 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                                 .addComponent(txtSubt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(262, 262, 262)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(262, 262, 262))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addGap(82, 82, 82)))
                         .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,7 +320,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -511,6 +526,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         }
         else{
             venda.setCliente(Integer.parseInt(txtCodCli.getText()));
+            venda.setUsuario(Integer.parseInt(System.getProperty("codigo")));
             venda.setQtd_item(Double.parseDouble(tableModel.CalculaQtd()));
             venda.setDataVenda(java.sql.Date.valueOf(formatador.format(data)));
             venda.setFormaPagamento((String) cboFormaPag.getSelectedItem());
@@ -554,11 +570,21 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Teste pega user
+        
+        
+        System.out.println(System.getProperty("codigo"));
+                
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Venda;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JComboBox cboFormaPag;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

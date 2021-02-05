@@ -16,6 +16,7 @@ public class Venda {
     
     private int id;
     private int cliente;
+    private int usuario;
     private Double qtd_item;
     private Date dataVenda;
     private String formaPagamento;
@@ -47,6 +48,34 @@ public class Venda {
      */
     public void setCliente(int cliente) {
         this.cliente = cliente;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public int getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     * @return the qtd_item
+     */
+    public Double getQtd_item() {
+        return qtd_item;
+    }
+
+    /**
+     * @param qtd_item the qtd_item to set
+     */
+    public void setQtd_item(Double qtd_item) {
+        this.qtd_item = qtd_item;
     }
 
     /**
@@ -91,19 +120,6 @@ public class Venda {
         this.valorTotal = valorTotal;
     }
 
-    /**
-     * @return the qtd_item
-     */
-    public Double getQtd_item() {
-        return qtd_item;
-    }
-
-    /**
-     * @param qtd_item the qtd_item to set
-     */
-    public void setQtd_item(Double qtd_item) {
-        this.qtd_item = qtd_item;
-    }
 
     
       

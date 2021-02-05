@@ -37,12 +37,13 @@ public class VendaDAO {
 
         try {
 
-            stmt = con.prepareCall("{call addVenda(?, ?, ?, ?, ?)}"); // ?, ?, ?, ? stored procedure addVenda adc itens tbm
+            stmt = con.prepareCall("{call addVenda(?, ?, ?, ?, ?, ?)}"); // ?, ?, ?, ? stored procedure addVenda adc itens tbm
             stmt.setInt(1, venda.getCliente());
-            stmt.setDouble(2, venda.getQtd_item());
-            stmt.setDate(3, venda.getDataVenda());
-            stmt.setString(4, venda.getFormaPagamento());
-            stmt.setDouble(5, venda.getValorTotal());
+            stmt.setInt(2, venda.getUsuario());
+            stmt.setDouble(3, venda.getQtd_item());
+            stmt.setDate(4, venda.getDataVenda());
+            stmt.setString(5, venda.getFormaPagamento());
+            stmt.setDouble(6, venda.getValorTotal());
             
 
             stmt.execute();

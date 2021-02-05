@@ -8,6 +8,8 @@ package br.com.sgef.dao;
 import br.com.sgef.dal.ConnectionFactory;
 import br.com.sgef.model.User;
 import br.com.sgef.telas.TelaCadUser;
+import br.com.sgef.telas.TelaLogin;
+import br.com.sgef.telas.TelaPrincipal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -238,5 +240,76 @@ public class UserDAO {
 
         }
     } 
+    
+      //Método para pegar todas as marcas e colocar no combobox
+    public List<User> pegarTodosUsers() {
+        
+        List<User> users = new ArrayList<>();
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null; 
+        try {
+            stmt = con.prepareStatement("select * from user ORDER by nome");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsuario(rs.getString("usuario"));
+                users.add(user);
+            }
+             
+        }catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
+        return users;
+    }
+    
+    public void logarr(User user){
+        
+        String sql = "select*from user where usuario=? and senha=?";
+        
+        try {
+            
+            pst = conexao.prepareStatement(sql);
+            
+            pst.setInt(1, user.getId());
+            pst.setString(2, user.getUsuario());
+            pst.setString(3, user.getSenha());
+            
+            rs = pst.executeQuery();
+            if(rs.next()){
+                //obtem o perfil de usuario
+                String perfil = rs.getString(5);
+                //System.out.println(perfil);
+                //A estrutura abaixo faz o tratamento do perfil de usuario
+                if(perfil.equals("Administrador")){
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);
+                TelaPrincipal.cadMenUser.setEnabled(true);
+                
+                TelaLogin login = new TelaLogin();
+                
+                login.dispose();
+                conexao.close();
+                }
+                else{
+                
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);
+                TelaLogin login = new TelaLogin();
+                login.dispose();
+                conexao.close();
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuario ou Senha Inválildo");
+            }
+           
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuario ou Senha Inválildo");
+        }
+
+    }
      
 }
