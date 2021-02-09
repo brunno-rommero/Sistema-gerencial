@@ -5,11 +5,18 @@
  */
 package br.com.sgef.telas;
 
+import br.com.sgef.dao.MovVendaDAO;
 import br.com.sgef.dao.MovVendaTableModel;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.UserComboModelDAO;
+import br.com.sgef.model.MovVenda;
 import br.com.sgef.model.User;
 import java.awt.Dimension;
+import java.sql.Date;
+import java.text.NumberFormat;
+import java.util.Locale;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -25,10 +32,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
     public TelaMovVenda() {
         initComponents();
         
-        tblMovVenda.setModel(tableModel);
-        tableModel.setTableColumnModel(tblMovVenda.getColumnModel());
-        
-        
+        //tblMovVenda.setModel(tableModel);
+        //tableModel.setTableColumnModel(tblMovVenda.getColumnModel());
+
         userComboModel = new UserComboModelDAO();
         
         UserDAO Udao = new UserDAO();
@@ -38,6 +44,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             userComboModel.addUsers(u);
             cboUser.setModel(userComboModel); 
         }
+        
         
     }
     
@@ -58,8 +65,6 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cboFormaPag = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -68,6 +73,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         cboUser = new javax.swing.JComboBox();
+        txtDataInic = new javax.swing.JFormattedTextField();
+        txtDataFin = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -75,11 +82,16 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Usuário");
 
-        cboFormaPag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão", "Cheque" }));
+        cboFormaPag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão", "Cheque", "Todos" }));
 
         jLabel2.setText("Form. Pagamento");
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Data Inicial");
 
@@ -92,12 +104,55 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             new String [] {
                 "Código", "Data", "Forma Pag", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblMovVenda);
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Rel. Lista");
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setText("Lista Prod.");
+
+        cboUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboUserActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtDataInic.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtDataInic.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDataInicFocusGained(evt);
+            }
+        });
+        txtDataInic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDataInicKeyPressed(evt);
+            }
+        });
+
+        try {
+            txtDataFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtDataFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataFinActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,15 +182,15 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtDataInic, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(108, 108, 108)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,10 +204,10 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(cboUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataInic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
@@ -164,6 +219,70 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtDataFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataFinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataFinActionPerformed
+
+    private void txtDataInicKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataInicKeyPressed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_txtDataInicKeyPressed
+
+    private void txtDataInicFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataInicFocusGained
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtDataInicFocusGained
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        MovVendaDAO dao = new MovVendaDAO();
+        MovVenda movVenda = new MovVenda();
+        
+        User u = (User)userComboModel.getSelectedItem();
+        
+        
+        
+        String dataInicial = txtDataInic.getText().replaceAll("/", "-");
+        String[] s = dataInicial.split("-");
+        String novaDataI = s[2]+"-"+s[1]+"-"+s[0];
+        
+        String dataFinal = txtDataFin.getText().replaceAll("/", "-");
+        String[] sf = dataFinal.split("-");
+        String novaDataF = sf[2]+"-"+sf[1]+"-"+sf[0];
+       
+        
+        movVenda.setUsuario(u.getId());
+        movVenda.setFormPag(cboFormaPag.getSelectedItem().toString());
+        movVenda.setDataInicial(Date.valueOf(novaDataI));
+        movVenda.setDatafinal(Date.valueOf(novaDataF));
+        
+       
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblMovVenda.getModel();
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
+        ((DefaultTableModel) tblMovVenda.getModel()).setRowCount(0);
+        
+        for (MovVenda mv: dao.read(movVenda)) {
+            modelo.addRow(new Object[]{
+                mv.getIdVenda(),
+                mv.getDataVenda(),
+                mv.getFormPag(),
+                mv.getVlrTotal()
+                
+            });
+
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cboUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUserActionPerformed
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_cboUserActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -177,8 +296,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     public javax.swing.JTable tblMovVenda;
+    private javax.swing.JFormattedTextField txtDataFin;
+    private javax.swing.JFormattedTextField txtDataInic;
     // End of variables declaration//GEN-END:variables
 }

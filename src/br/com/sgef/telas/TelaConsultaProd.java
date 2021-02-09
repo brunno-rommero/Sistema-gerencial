@@ -10,10 +10,15 @@ import br.com.sgef.dao.LinhaDAO;
 import br.com.sgef.dao.MarcaDAO;
 import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.model.Produto;
+import br.com.sgef.util.SoNumeros;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
 
 /**
  *
@@ -26,6 +31,19 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
      */
     public TelaConsultaProd() {
         initComponents(); 
+        if(jbCod.isSelected()){
+            jbDesc.setSelected(false);
+            txtPesquisar.setDocument(new SoNumeros());
+            txtPesquisar.requestFocus();
+            
+        }else{
+            jbCod.setSelected(false);
+            txtPesquisar.setDocument(new JTextField().getDocument());
+            txtPesquisar.requestFocus();
+        }
+        
+        
+        
         
     }
     
@@ -102,7 +120,6 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
             }
         });
 
-        jbCod.setSelected(true);
         jbCod.setText("Código");
         jbCod.setFocusPainted(false);
         jbCod.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +128,7 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
             }
         });
 
+        jbDesc.setSelected(true);
         jbDesc.setText("Descrição");
         jbDesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,31 +189,16 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
 
     private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
 
-        //pega id da consulta
+        //pega id da consulta na jtable
+        System.setProperty("codUserSelect", tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
+        JOptionPane.showMessageDialog(null, System.getProperty("codUserSelect"));
         
     }//GEN-LAST:event_tblProdutoMouseClicked
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
         //ao digitar no campo de pesquisa ou apertar enter faz a consulta no banco utilizando like
-        ProdutoDAO dao = new ProdutoDAO();
-
-        DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
-        ((DefaultTableModel) tblProduto.getModel()).setRowCount(0);
-
-        for (Produto p: dao.read(this.txtPesquisar.getText().toString())) {
-            String valorCompras = nf.format(p.getPcompra());
-            String valorVendas = nf.format(p.getPvenda());
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getDescricao(),
-                valorCompras,
-                p.getEstoque(),
-                valorVendas
-            });
-
-        }
+        
+        
     }//GEN-LAST:event_txtPesquisarKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -206,18 +209,43 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
         ((DefaultTableModel) tblProduto.getModel()).setRowCount(0);
+        if(jbCod.isSelected()){
+           
+            if (txtPesquisar.getText().isEmpty()) {
+                
+                JOptionPane.showMessageDialog(null, "Digite o Código do Produto");
+                
+            }else{
+            
+                for (Produto p: dao.read_int(Integer.parseInt(this.txtPesquisar.getText()))) {
+                    String valorCompras = nf.format(p.getPcompra());
+                    String valorVendas = nf.format(p.getPvenda());
+                    modelo.addRow(new Object[]{
+                        p.getId(),
+                        p.getDescricao(),
+                        valorCompras,
+                        p.getEstoque(),
+                        valorVendas
+                    });
 
-        for (Produto p: dao.read(this.txtPesquisar.getText().toString())) {
-            String valorCompras = nf.format(p.getPcompra());
-            String valorVendas = nf.format(p.getPvenda());
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getDescricao(),
-                valorCompras,
-                p.getEstoque(),
-                valorVendas
-            });
+                }
+            }    
+            
+        }
+        if(jbDesc.isSelected()){
+            
+            for (Produto p: dao.read(this.txtPesquisar.getText().toString())) {
+                String valorCompras = nf.format(p.getPcompra());
+                String valorVendas = nf.format(p.getPvenda());
+                modelo.addRow(new Object[]{
+                    p.getId(),
+                    p.getDescricao(),
+                    valorCompras,
+                    p.getEstoque(),
+                    valorVendas
+                });
 
+            }
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -243,8 +271,9 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
     private void jbCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCodActionPerformed
         // TODO add your handling code here:
         if(jbCod.isSelected()){
-            
             jbDesc.setSelected(false);
+            txtPesquisar.setDocument(new SoNumeros());
+            txtPesquisar.setText("0");
             
         }
         
@@ -255,7 +284,9 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
         if(jbDesc.isSelected()){
             
             jbCod.setSelected(false);
+            txtPesquisar.setDocument(new JTextField().getDocument());
             
+  
         }
     }//GEN-LAST:event_jbDescActionPerformed
 

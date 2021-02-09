@@ -6,7 +6,6 @@
 package br.com.sgef.dao;
 
 import br.com.sgef.dal.ConnectionFactory;
-import br.com.sgef.model.ItemVenda;
 import br.com.sgef.model.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -19,6 +19,7 @@ public class MovVenda {
     private Date datafinal;
     private int usuario;
     private String formPag;
+    private Double vlrTotal;
     
     
     /**
@@ -103,6 +104,20 @@ public class MovVenda {
      */
     public void setDataVenda(Date dataVenda) {
         this.dataVenda = dataVenda;
+    }
+
+    /**
+     * @return the vlrTotal
+     */
+    public Double getVlrTotal() {
+        return vlrTotal;
+    }
+
+    /**
+     * @param vlrTotal the vlrTotal to set
+     */
+    public void setVlrTotal(Double vlrTotal) {
+        this.vlrTotal = vlrTotal;
     }
     
     

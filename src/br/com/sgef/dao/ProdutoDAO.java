@@ -147,6 +147,54 @@ public class ProdutoDAO {
         return produto;
    
     }
+
+    //Método para pesquisar quando digita no campo de txtPesquisar
+    public List<Produto> read_int(int Pesquisar){
+ 
+        List<Produto> produto = new ArrayList<>();
+        
+        try {
+            Connection con = ConnectionFactory.getConnection();
+            String sql = ("SELECT p.id, p.descricao, p.estoque, p.pcompra, p.pvenda \n" +
+                            "FROM produto p\n" +
+                            "INNER JOIN marca m ON p.id_marca = m.id\n" +
+                            "INNER JOIN linha l ON p.id_linha = l.id \n" +
+                            "WHERE p.id LIKE ?");
+            pst = con.prepareStatement(sql);
+            pst.setString(1, Pesquisar + "%");         
+            
+            rs = pst.executeQuery();
+            NumberFormat z = NumberFormat.getCurrencyInstance();
+                while ( rs.next() ) {
+                    Produto prod = new Produto();
+                    prod.setId(rs.getInt(1));
+                    prod.setDescricao(rs.getString(2));
+                    prod.setEstoque((rs.getInt(3)));
+                    prod.setPcompra(rs.getBigDecimal(4));
+                    prod.setPvenda(rs.getBigDecimal(5));
+                    
+                    produto.add(prod);
+                }
+            con.close();
+  
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+
+        return produto;
+   
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //Método para excluir registro ao clicar em excluir
     public void excluir(Produto produto) {
