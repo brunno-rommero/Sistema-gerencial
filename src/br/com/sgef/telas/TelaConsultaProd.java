@@ -6,26 +6,21 @@
 package br.com.sgef.telas;
 
 
-import br.com.sgef.dao.LinhaDAO;
-import br.com.sgef.dao.MarcaDAO;
 import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.model.Produto;
 import br.com.sgef.util.SoNumeros;
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.Document;
 
 /**
  *
  * @author Bruno
  */
-public class TelaConsultaProd extends javax.swing.JInternalFrame {
-
+public class TelaConsultaProd extends javax.swing.JInternalFrame {    
     /**
      * Creates new form TelaConsultaProd
      */
@@ -41,10 +36,7 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
             txtPesquisar.setDocument(new JTextField().getDocument());
             txtPesquisar.requestFocus();
         }
-        
-        
-        
-        
+ 
     }
     
     public void setPosicao() {
@@ -188,17 +180,34 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
-
         //pega id da consulta na jtable
         System.setProperty("codUserSelect", tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
-        JOptionPane.showMessageDialog(null, System.getProperty("codUserSelect"));
-        
     }//GEN-LAST:event_tblProdutoMouseClicked
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
         //ao digitar no campo de pesquisa ou apertar enter faz a consulta no banco utilizando like
+        ProdutoDAO dao = new ProdutoDAO();
         
-        
+        DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
+        ((DefaultTableModel) tblProduto.getModel()).setRowCount(0);
+            if(jbDesc.isSelected()){
+                for (Produto p: dao.read(this.txtPesquisar.getText().toString())) {
+                    String valorCompras = nf.format(p.getPcompra());
+                    String valorVendas = nf.format(p.getPvenda());
+                    modelo.addRow(new Object[]{
+                        p.getId(),
+                        p.getDescricao(),
+                        valorCompras,
+                        p.getEstoque(),
+                        valorVendas
+                    });
+
+                }
+
+        }
+  
     }//GEN-LAST:event_txtPesquisarKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -253,19 +262,12 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         // TODO add your handling code here:
         
-        ProdutoDAO dao = new ProdutoDAO();
-        Produto produto = new Produto();
-        LinhaDAO linhadao = new LinhaDAO();
-        MarcaDAO marcadao = new MarcaDAO();
-       
+        Produto prod = new Produto();
+        prod.setId(Integer.parseInt(System.getProperty("codUserSelect")));
+        JOptionPane.showMessageDialog(null, System.getProperty("codUserSelect"));
         
-
-        int k = tblProduto.getSelectedRow();
-        Object id = tblProduto.getValueAt(k, 0);
         
-        System.out.println("Codigo: " + id);
-        
-           
+     
     }//GEN-LAST:event_btnSelectActionPerformed
 
     private void jbCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCodActionPerformed

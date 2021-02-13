@@ -9,12 +9,15 @@ import br.com.sgef.dao.MovVendaDAO;
 import br.com.sgef.dao.MovVendaTableModel;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.UserComboModelDAO;
+import br.com.sgef.dao.VendaDAO;
 import br.com.sgef.model.MovVenda;
 import br.com.sgef.model.User;
+import br.com.sgef.model.Venda;
 import java.awt.Dimension;
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -44,6 +47,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             userComboModel.addUsers(u);
             cboUser.setModel(userComboModel); 
         }
+        
+        tblMovVenda.setModel(tableModel);
+        tableModel.setTableColumnModel(tblMovVenda.getColumnModel());
         
         
     }
@@ -113,10 +119,20 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblMovVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMovVendaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMovVenda);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Rel. Lista");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setText("Lista Prod.");
@@ -253,29 +269,23 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         String[] sf = dataFinal.split("-");
         String novaDataF = sf[2]+"-"+sf[1]+"-"+sf[0];
        
+        int l=0;
+        while(tableModel.getRowCount()>l){
+            tableModel.removeRow(l);
+        }
         
         movVenda.setUsuario(u.getId());
         movVenda.setFormPag(cboFormaPag.getSelectedItem().toString());
         movVenda.setDataInicial(Date.valueOf(novaDataI));
         movVenda.setDatafinal(Date.valueOf(novaDataF));
         
+        for (MovVenda mv: dao.read(movVenda)) {
+            tableModel.addRow(mv);
+        }
        
         
-        DefaultTableModel modelo = (DefaultTableModel) tblMovVenda.getModel();
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
-        ((DefaultTableModel) tblMovVenda.getModel()).setRowCount(0);
         
-        for (MovVenda mv: dao.read(movVenda)) {
-            modelo.addRow(new Object[]{
-                mv.getIdVenda(),
-                mv.getDataVenda(),
-                mv.getFormPag(),
-                mv.getVlrTotal()
-                
-            });
-
-        }
+ 
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -283,6 +293,18 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
    
     }//GEN-LAST:event_cboUserActionPerformed
+
+    private void tblMovVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMovVendaMouseClicked
+        // TODO add your handling code here:
+        System.setProperty("codvenda", tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0).toString());
+    }//GEN-LAST:event_tblMovVendaMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        VendaDAO dao = new VendaDAO();
+        dao.abrirListaProd(Integer.parseInt(System.getProperty("codvenda")));
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

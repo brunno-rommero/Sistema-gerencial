@@ -5,8 +5,10 @@
  */
 package br.com.sgef.dao;
 
-import br.com.sgef.model.Venda;
+
+import br.com.sgef.model.MovVenda;
 import br.com.sgef.util.NumberRenderer;
+import br.com.sgef.util.FormatRenderer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -18,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class MovVendaTableModel extends AbstractTableModel{
     
-    private List<Venda> dados = new ArrayList<>();
+    private List<MovVenda> dados = new ArrayList<>();
     private String[] colunas = {"Código", "Data", "Forma pagamento", "Total"};
 
     @Override
@@ -41,21 +43,21 @@ public class MovVendaTableModel extends AbstractTableModel{
         
         switch(coluna){
             case 0:
-                return dados.get(linha).getId();
+                return dados.get(linha).getIdVenda();
             case 1:
                 return dados.get(linha).getDataVenda();
             case 2:
-                return dados.get(linha).getFormaPagamento();
+                return dados.get(linha).getFormPag();
             case 3:
-                return dados.get(linha).getValorTotal();
+                return dados.get(linha).getVlrTotal();
            
         }
         
         return null;
     }
     
-    public void addRow(Venda venda){
-        this.dados.add(venda);
+    public void addRow(MovVenda Mvenda){
+        this.dados.add(Mvenda);
         this.fireTableDataChanged();
     }
     
@@ -67,12 +69,12 @@ public class MovVendaTableModel extends AbstractTableModel{
     public void setTableColumnModel(TableColumnModel columnModel){
         
         
-        //columnModel.getColumn(2).setCellRenderer(NumberRenderer.getNumberRenderer(0));
+        columnModel.getColumn(1).setCellRenderer(FormatRenderer.getDateRenderer());
         columnModel.getColumn(3).setCellRenderer(NumberRenderer.getCurrencyRenderer());
-        
         
         columnModel.getColumn(0).setPreferredWidth(10);
         columnModel.getColumn(2).setPreferredWidth(200);
+        
         
         
     }
