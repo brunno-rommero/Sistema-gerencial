@@ -247,16 +247,23 @@ public class UserDAO {
         List<User> users = new ArrayList<>();
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null; 
+        
         try {
             stmt = con.prepareStatement("select * from user ORDER by nome");
             ResultSet rs = stmt.executeQuery();
+            
+            
             while (rs.next()) {
-                User user = new User();
+               User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setUsuario(rs.getString("usuario"));
                 users.add(user);
             }
-             
+            User user = new User();
+            user.setUsuario("Todos");
+            users.add(user);
+            
+        
         }catch (Exception e) {
             System.out.println(e);
         } finally {

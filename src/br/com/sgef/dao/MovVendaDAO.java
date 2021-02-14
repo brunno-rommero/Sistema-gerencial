@@ -29,6 +29,30 @@ public class MovVendaDAO {
         try {
             Connection con = ConnectionFactory.getConnection();
             
+            if((venda.getFormPag() == "Todos") && (venda.getUsuario() == 0)){
+                
+                String sql = ("SELECT id, dataVenda, formaPag, valorTotal FROM venda \n" +
+                              "WHERE dataVenda BETWEEN ? AND ?");
+                            
+                PreparedStatement pst = con.prepareStatement(sql); 
+                pst.setDate(1, venda.getDataInicial()); 
+                pst.setDate(2, venda.getDatafinal()); 
+                ResultSet rs = pst.executeQuery();
+                
+                while ( rs.next() ) {
+                    MovVenda mv = new MovVenda();
+                    mv.setIdVenda(rs.getInt(1));
+                    mv.setDataVenda(rs.getDate(2));
+                    mv.setFormPag(rs.getString(3));
+                    mv.setVlrTotal(rs.getDouble(4));
+                    
+                    movVenda.add(mv);
+                }
+                
+                
+            }
+            
+            
             if(venda.getFormPag() == "Todos"){
                 String sql = ("SELECT id, dataVenda, formaPag, valorTotal FROM venda \n" +
                             "WHERE id_usuario = ? AND\n" +
@@ -51,7 +75,33 @@ public class MovVendaDAO {
                 
                 
                 
-            }else{
+            }
+            if(venda.getUsuario() == 0){
+                String sql = ("SELECT id, dataVenda, formaPag, valorTotal FROM venda \n" +
+                            "WHERE formaPag = ? AND\n" +
+                            "dataVenda BETWEEN ? AND ?");
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, venda.getFormPag());  
+                pst.setDate(2, venda.getDataInicial()); 
+                pst.setDate(3, venda.getDatafinal()); 
+                ResultSet rs = pst.executeQuery();
+                
+                while ( rs.next() ) {
+                    MovVenda mv = new MovVenda();
+                    mv.setIdVenda(rs.getInt(1));
+                    mv.setDataVenda(rs.getDate(2));
+                    mv.setFormPag(rs.getString(3));
+                    mv.setVlrTotal(rs.getDouble(4));
+                    
+                    movVenda.add(mv);
+                }
+                
+                
+                
+            }
+            
+            
+            else{
                 String sql = ("SELECT id, dataVenda, formaPag, valorTotal FROM venda \n" +
                                 "WHERE id_usuario = ? AND\n" +
                                 "formaPag = ? AND\n" +

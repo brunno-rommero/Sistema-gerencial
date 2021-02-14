@@ -20,9 +20,25 @@
      itVenda.`quantidade` AS itVenda_quantidade,
      itVenda.`valorUnit` AS itVenda_valorUnit,
      itVenda.`subtotal` AS itVenda_subtotal,
-     itVenda.`total` AS itVenda_total
+     itVenda.`total` AS itVenda_total,
+     user.`id` AS user_id,
+     user.`nome` AS user_nome,
+     user.`usuario` AS user_usuario,
+     user.`senha` AS user_senha,
+     user.`perfilUser` AS user_perfilUser,
+     venda.`id_usuario` AS venda_id_usuario,
+     cliente.`nome` AS cliente_nome,
+     cliente.`cidade` AS cliente_cidade,
+     cliente.`uf` AS cliente_uf,
+     cliente.`telefone` AS cliente_telefone,
+     cliente.`endereco` AS cliente_endereco,
+     cliente.`bairro` AS cliente_bairro,
+     cliente.`numero` AS cliente_numero,
+     cliente.`id` AS cliente_id
 FROM
      `venda` venda INNER JOIN `itVenda` itVenda ON venda.`id` = itVenda.`id_venda`
+     INNER JOIN `user` user ON venda.`id_usuario` = user.`id`
+     INNER JOIN `cliente` cliente ON venda.`id_cliente` = cliente.`id`
 WHERE
      id_venda = $P{IdVenda}]]>
 	</queryString>
@@ -30,6 +46,9 @@ WHERE
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="id_cliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_usuario" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="qtd_item" class="java.lang.Double">
@@ -65,6 +84,36 @@ WHERE
 	<field name="total" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usuario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="senha" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="perfilUser" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="endereco" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="venda_id" class="java.lang.Integer"/>
 	<field name="venda_id_cliente" class="java.lang.Integer"/>
 	<field name="venda_qtd_item" class="java.lang.Double"/>
@@ -79,6 +128,20 @@ WHERE
 	<field name="itVenda_valorUnit" class="java.lang.Double"/>
 	<field name="itVenda_subtotal" class="java.lang.Double"/>
 	<field name="itVenda_total" class="java.lang.Double"/>
+	<field name="user_id" class="java.lang.Integer"/>
+	<field name="user_nome" class="java.lang.String"/>
+	<field name="user_usuario" class="java.lang.String"/>
+	<field name="user_senha" class="java.lang.String"/>
+	<field name="user_perfilUser" class="java.lang.String"/>
+	<field name="venda_id_usuario" class="java.lang.Integer"/>
+	<field name="cliente_nome" class="java.lang.String"/>
+	<field name="cliente_cidade" class="java.lang.String"/>
+	<field name="cliente_uf" class="java.lang.String"/>
+	<field name="cliente_telefone" class="java.lang.String"/>
+	<field name="cliente_endereco" class="java.lang.String"/>
+	<field name="cliente_bairro" class="java.lang.String"/>
+	<field name="cliente_numero" class="java.lang.String"/>
+	<field name="cliente_id" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -135,7 +198,7 @@ WHERE
 				<reportElement x="0" y="45" width="555" height="1" uuid="247eefb6-3d7e-49b0-bdc2-b863a56490d3"/>
 			</line>
 			<textField>
-				<reportElement x="49" y="0" width="86" height="15" uuid="a1d2d9a0-46d3-472c-b3d4-aa8ed28ed4f6"/>
+				<reportElement x="49" y="0" width="46" height="15" uuid="a1d2d9a0-46d3-472c-b3d4-aa8ed28ed4f6"/>
 				<textFieldExpression><![CDATA[$F{id_venda}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -150,6 +213,23 @@ WHERE
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="495" y="0" width="60" height="15" uuid="1e91b83f-2838-4a8b-8e26-302bd2a1f95d"/>
 				<textFieldExpression><![CDATA[$F{venda_dataVenda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="111" y="0" width="38" height="15" uuid="2c4bed94-c4da-4ce5-a80d-35244a26a313"/>
+				<text><![CDATA[Usuário:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="149" y="0" width="193" height="15" uuid="d5d3e5d0-5b3a-4925-8a8d-fa4706a873a1"/>
+				<textFieldExpression><![CDATA[$F{user_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="17" width="46" height="14" uuid="be785f66-ca34-4902-b72a-dde77169a294"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="38" y="17" width="100" height="14" uuid="a8b761be-ef7d-4919-b4b8-e0b23edd9bb3"/>
+				<textFieldExpression><![CDATA[$F{cliente_nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -199,7 +279,7 @@ WHERE
 	<summary>
 		<band height="27" splitType="Stretch">
 			<rectangle>
-				<reportElement x="417" y="10" width="138" height="15" backcolor="#CCFFCC" uuid="0b10bf58-7356-434a-a632-15d9514b98c6"/>
+				<reportElement x="417" y="10" width="138" height="15" backcolor="#99FFFF" uuid="0b10bf58-7356-434a-a632-15d9514b98c6"/>
 			</rectangle>
 			<textField pattern="¤ #,##0.00">
 				<reportElement x="455" y="10" width="90" height="15" uuid="f8dd4557-d08c-496f-b7ae-75bfa234f3b4"/>
@@ -211,7 +291,7 @@ WHERE
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="10" width="220" height="15" backcolor="#CCFFCC" uuid="01cdb64c-58a2-4902-82a5-131b9e4976c9"/>
+				<reportElement x="0" y="10" width="220" height="15" backcolor="#99FFFF" uuid="01cdb64c-58a2-4902-82a5-131b9e4976c9"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="9" y="10" width="101" height="15" uuid="23e76620-bc9b-42be-b23f-7d29eda721b8"/>
