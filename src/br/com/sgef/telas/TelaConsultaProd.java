@@ -9,9 +9,15 @@ package br.com.sgef.telas;
 import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.model.Produto;
 import br.com.sgef.util.SoNumeros;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.beans.PropertyVetoException;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -24,8 +30,15 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaConsultaProd
      */
-    public TelaConsultaProd() {
+    
+    
+    private TelaVenda telaVenda;
+    public TelaConsultaProd(TelaVenda aThis) {
         initComponents(); 
+        
+        this.telaVenda = aThis;
+        
+        
         if(jbCod.isSelected()){
             jbDesc.setSelected(false);
             txtPesquisar.setDocument(new SoNumeros());
@@ -39,6 +52,11 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
  
     }
     
+
+
+
+
+
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
@@ -132,10 +150,6 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(279, 279, 279))
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,16 +162,20 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(22, Short.MAX_VALUE)
+                        .addContainerGap(25, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
@@ -171,17 +189,16 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         setBounds(0, 0, 696, 380);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
-        //pega id da consulta na jtable
-        System.setProperty("codUserSelect", tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
+
     }//GEN-LAST:event_tblProdutoMouseClicked
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
@@ -261,13 +278,17 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         // TODO add your handling code here:
-        
-        Produto prod = new Produto();
-        prod.setId(Integer.parseInt(System.getProperty("codUserSelect")));
-        JOptionPane.showMessageDialog(null, System.getProperty("codUserSelect"));
-        
-        
-     
+      
+        try {
+            int codProd = 0;
+            codProd = (int) tblProduto.getValueAt(tblProduto.getSelectedRow(), 0);
+            telaVenda.txtCod.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
+            //fecha tela de consulta ao clicar no botao select
+            this.doDefaultCloseAction();
+        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Nenhum Registro Selecionado.");
+        }
+
     }//GEN-LAST:event_btnSelectActionPerformed
 
     private void jbCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCodActionPerformed
@@ -287,8 +308,7 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
             
             jbCod.setSelected(false);
             txtPesquisar.setDocument(new JTextField().getDocument());
-            
-  
+
         }
     }//GEN-LAST:event_jbDescActionPerformed
 

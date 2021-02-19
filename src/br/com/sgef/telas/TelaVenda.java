@@ -41,6 +41,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     
     public TelaVenda() {
         initComponents();
+
         txtCod.setDocument(new SoNumeros());
         txtQtd.setDocument(new SoNumeros());
         txtQtd.setText("1");
@@ -58,7 +59,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtVenda.setText(String.valueOf(vdao.pegaIdVenda()));
 
     }
-    
+
+
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
@@ -95,7 +97,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         txtVenda = new javax.swing.JTextField();
         Venda = new javax.swing.JLabel();
-        teste = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -260,11 +261,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(teste, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                            .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
                         .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtCodCli, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -313,8 +311,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboFormaPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(teste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -339,7 +336,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             if(txtCod.getText().isEmpty()){
                 
                 //abrir consulta de cliente
-                TelaConsultaProd consultaProd = new TelaConsultaProd();
+                TelaConsultaProd consultaProd = new TelaConsultaProd(this);
+                
                 getParent().add(consultaProd);
                 consultaProd.setVisible(true);
                 consultaProd.txtPesquisar.grabFocus();
@@ -583,7 +581,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblVenda;
-    public javax.swing.JTextField teste;
     private javax.swing.JTextField txtCliente;
     public javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtCodCli;

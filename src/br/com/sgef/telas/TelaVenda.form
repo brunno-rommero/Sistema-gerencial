@@ -69,13 +69,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="cboFormaPag" min="-2" pref="168" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="teste" min="-2" pref="147" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="cboFormaPag" min="-2" pref="168" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="137" max="32767" attributes="0"/>
+                      <EmptySpace pref="323" max="32767" attributes="0"/>
                       <Component id="btnFinalizar" min="-2" pref="175" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -135,7 +131,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cboFormaPag" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnFinalizar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="teste" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -301,11 +296,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Venda"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="teste">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
