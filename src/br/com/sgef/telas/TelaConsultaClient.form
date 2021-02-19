@@ -148,7 +148,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jbCod">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
       </Properties>
       <Events>
@@ -157,6 +156,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jbDesc">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
       </Properties>
       <Events>

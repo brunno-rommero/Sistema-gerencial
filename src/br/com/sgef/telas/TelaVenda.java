@@ -487,7 +487,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
              if(txtCodCli.getText().isEmpty()){
                  
                  //abrir tela de consulta de cliente
-                TelaConsultaClient consultaCli = new TelaConsultaClient();
+                TelaConsultaClient consultaCli = new TelaConsultaClient(this);
                 getParent().add(consultaCli);
                 consultaCli.setVisible(true);
                 consultaCli.txtPesquisar.grabFocus();
@@ -583,7 +583,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblVenda;
     private javax.swing.JTextField txtCliente;
     public javax.swing.JTextField txtCod;
-    private javax.swing.JTextField txtCodCli;
+    public javax.swing.JTextField txtCodCli;
     private javax.swing.JTextField txtDescProd;
     private javax.swing.JTextField txtQtd;
     private javax.swing.JTextField txtSubt;

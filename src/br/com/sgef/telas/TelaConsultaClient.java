@@ -7,7 +7,10 @@ package br.com.sgef.telas;
 
 import br.com.sgef.dao.ClienteDAO;
 import br.com.sgef.model.Cliente;
+import br.com.sgef.util.SoNumeros;
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,8 +22,24 @@ public class TelaConsultaClient extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaConsultaClient
      */
-    public TelaConsultaClient() {
+    private TelaVenda telaVenda;
+    public TelaConsultaClient(TelaVenda aThis) {
         initComponents();
+        
+        this.telaVenda = aThis;
+        
+        if(jbCod.isSelected()){
+            jbDesc.setSelected(false);
+            txtPesquisar.setDocument(new SoNumeros());
+            txtPesquisar.requestFocus();
+            
+        }else{
+            jbCod.setSelected(false);
+            txtPesquisar.setDocument(new JTextField().getDocument());
+            txtPesquisar.requestFocus();
+        }
+        
+        
         
     }
 
@@ -98,7 +117,6 @@ public class TelaConsultaClient extends javax.swing.JInternalFrame {
             }
         });
 
-        jbCod.setSelected(true);
         jbCod.setText("Código");
         jbCod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +124,7 @@ public class TelaConsultaClient extends javax.swing.JInternalFrame {
             }
         });
 
+        jbDesc.setSelected(true);
         jbDesc.setText("Descrição");
         jbDesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,46 +180,70 @@ public class TelaConsultaClient extends javax.swing.JInternalFrame {
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
         //ao digitar no campo de pesquisa ou apertar enter faz a consulta no banco utilizando like
-
+        
         ClienteDAO cdao = new ClienteDAO();
+        
+        
         DefaultTableModel modelo = (DefaultTableModel) tblCliente.getModel();
-
+         
         //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
         ((DefaultTableModel) tblCliente.getModel()).setRowCount(0);
+        if(jbDesc.isSelected()){
+            for (Cliente c: cdao.read(this.txtPesquisar.getText().toString())) {
+                modelo.addRow(new Object[]{
+                    c.getId(),
+                    c.getNome(),
+                    c.getCidade(),
+                    c.getTelefone()
 
-        for (Cliente c: cdao.read(this.txtPesquisar.getText().toString())) {
-            modelo.addRow(new Object[]{
-                c.getId(),
-                c.getNome(),
-                c.getCidade(),
-                c.getTelefone()
+                });
 
-            });
-
-        }
-
+            }
+        }    
     }//GEN-LAST:event_txtPesquisarKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // ao clicar no botao buscar faz a consulta com o parametro passar no txtPesquisar
 
         ClienteDAO cdao = new ClienteDAO();
+        
+        
         DefaultTableModel modelo = (DefaultTableModel) tblCliente.getModel();
 
         //a linha abaixo limpa a tabela antes de colocar o resultado da pesquisa
         ((DefaultTableModel) tblCliente.getModel()).setRowCount(0);
+        if(jbCod.isSelected()){
+            
+            if (txtPesquisar.getText().isEmpty()) {
+                 JOptionPane.showMessageDialog(null, "Digite o Código do Cliente");
+            }else{
+                for (Cliente c: cdao.read_int(this.txtPesquisar.getText().toString())) {
+                    modelo.addRow(new Object[]{
+                        c.getId(),
+                        c.getNome(),
+                        c.getCidade(),
+                        c.getTelefone()
 
-        for (Cliente c: cdao.read(this.txtPesquisar.getText().toString())) {
-            modelo.addRow(new Object[]{
-                c.getId(),
-                c.getNome(),
-                c.getCidade(),
-                c.getTelefone()
+                    });
 
-            });
-
+                }
+            }    
         }
+        if(jbDesc.isSelected()){
+            
+            for (Cliente c: cdao.read(this.txtPesquisar.getText().toString())) {
+                modelo.addRow(new Object[]{
+                    c.getId(),
+                    c.getNome(),
+                    c.getCidade(),
+                    c.getTelefone()
 
+                });
+
+            }
+              
+        }
+         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
@@ -211,14 +254,26 @@ public class TelaConsultaClient extends javax.swing.JInternalFrame {
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         // TODO add your handling code here:
+        
+        try {
+            int codCli = 0;
+            codCli= (int) tblCliente.getValueAt(tblCliente.getSelectedRow(), 0);
+            telaVenda.txtCodCli.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString());
+            this.doDefaultCloseAction();
+        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Nenhum Registro Selecionado.");
+        }
+        
+        
     }//GEN-LAST:event_btnSelectActionPerformed
 
     private void jbCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCodActionPerformed
         // TODO add your handling code here:
         if(jbCod.isSelected()){
-
             jbDesc.setSelected(false);
-
+            txtPesquisar.setDocument(new SoNumeros());
+            txtPesquisar.setText("0");
+            
         }
 
     }//GEN-LAST:event_jbCodActionPerformed
@@ -226,8 +281,8 @@ public class TelaConsultaClient extends javax.swing.JInternalFrame {
     private void jbDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescActionPerformed
         // TODO add your handling code here:
         if(jbDesc.isSelected()){
-
             jbCod.setSelected(false);
+            txtPesquisar.setDocument(new JTextField().getDocument());
 
         }
     }//GEN-LAST:event_jbDescActionPerformed

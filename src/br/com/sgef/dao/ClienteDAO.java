@@ -89,6 +89,43 @@ public class ClienteDAO {
    
     }
     
+    public List<Cliente> read_int(String Pesquisar){
+ 
+        List<Cliente> cliente = new ArrayList<>();
+        
+        try {
+            Connection con = ConnectionFactory.getConnection();
+            String sql = ("select * from cliente where id like ?");
+            pst = con.prepareStatement(sql);
+            pst.setString(1, Pesquisar + "%");         
+            
+            rs = pst.executeQuery();
+
+                while ( rs.next() ) {
+                    Cliente cli = new Cliente();
+                    cli.setId(rs.getInt(1));
+                    cli.setNome(rs.getNString(2));
+                    cli.setCidade(rs.getNString(3));
+                    cli.setUf(rs.getNString(4));
+                    cli.setTelefone(rs.getNString(5));
+                    cli.setEndereco(rs.getNString(6));
+                    cli.setBairro(rs.getNString(7));
+                    cli.setNumero(rs.getNString(8));
+                    cliente.add(cli);
+                }
+            con.close();
+  
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+
+        return cliente;
+   
+    }
+    
+    
+    
+    
     //Método pega id ao clicar no registro da tabela e consulta os atributos na base
     public Cliente pesquisa_por_id(Integer id){
         

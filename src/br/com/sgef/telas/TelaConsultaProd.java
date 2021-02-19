@@ -9,15 +9,9 @@ package br.com.sgef.telas;
 import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.model.Produto;
 import br.com.sgef.util.SoNumeros;
-import java.awt.Desktop;
 import java.awt.Dimension;
-import java.beans.PropertyVetoException;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -203,6 +197,7 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
         //ao digitar no campo de pesquisa ou apertar enter faz a consulta no banco utilizando like
+        
         ProdutoDAO dao = new ProdutoDAO();
         
         DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
@@ -305,7 +300,6 @@ public class TelaConsultaProd extends javax.swing.JInternalFrame {
     private void jbDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescActionPerformed
         // TODO add your handling code here:
         if(jbDesc.isSelected()){
-            
             jbCod.setSelected(false);
             txtPesquisar.setDocument(new JTextField().getDocument());
 
