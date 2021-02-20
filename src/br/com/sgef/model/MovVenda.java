@@ -20,6 +20,7 @@ public class MovVenda {
     private int usuario;
     private String formPag;
     private Double vlrTotal;
+    private String situacao;
     
     
     /**
@@ -118,6 +119,20 @@ public class MovVenda {
      */
     public void setVlrTotal(Double vlrTotal) {
         this.vlrTotal = vlrTotal;
+    }
+
+    /**
+     * @return the situacao
+     */
+    public String getSituacao() {
+        return situacao;
+    }
+
+    /**
+     * @param situacao the situacao to set
+     */
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
     
     

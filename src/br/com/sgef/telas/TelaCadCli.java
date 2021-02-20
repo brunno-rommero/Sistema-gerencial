@@ -331,7 +331,6 @@ public class TelaCadCli extends javax.swing.JInternalFrame {
             });
 
         }
-
         
     }//GEN-LAST:event_btnSaveActionPerformed
 

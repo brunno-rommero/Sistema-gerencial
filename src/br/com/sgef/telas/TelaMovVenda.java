@@ -10,10 +10,16 @@ import br.com.sgef.dao.MovVendaTableModel;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.UserComboModelDAO;
 import br.com.sgef.dao.VendaDAO;
+import br.com.sgef.model.ItemVenda;
 import br.com.sgef.model.MovVenda;
 import br.com.sgef.model.User;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.sql.Date;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -76,6 +82,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         cboUser = new javax.swing.JComboBox();
         txtDataInic = new javax.swing.JFormattedTextField();
         txtDataFin = new javax.swing.JFormattedTextField();
+        jButton4 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -87,7 +94,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Form. Pagamento");
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -103,11 +112,11 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Data", "Forma Pag", "Total"
+                "Código", "Data", "Situação", "Forma Pag", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -165,6 +174,15 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(255, 51, 51));
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,7 +194,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -230,7 +250,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
@@ -278,9 +299,27 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         
         for (MovVenda mv: dao.read(movVenda)) {
             tableModel.addRow(mv);
-        }
+            
+            
+            
+            tblMovVenda.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){ 
+                @Override public Component getTableCellRendererComponent(JTable table, Object value, 
+                boolean isSelected, boolean hasFocus, int row, int col) { 
+                    super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col); 
+                   String situacao = (String) tblMovVenda.getModel().getValueAt(row, 2);
+                    if ("CANCELADA".equals(situacao)) { 
+                        setBackground(Color.RED); 
+                        setForeground(Color.WHITE);
+                    } else { 
+                         setBackground(table.getBackground());
+                         setForeground(table.getForeground());
+                    } 
+                    return this; 
+                } 
+            });
 
-        
+        }
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cboUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUserActionPerformed
@@ -300,6 +339,17 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        MovVendaDAO dao = new MovVendaDAO();
+        
+        dao.cancelaVenda((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));
+
+        jButton1ActionPerformed(evt);
+   
+  
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cboFormaPag;
@@ -307,6 +357,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

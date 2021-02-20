@@ -83,9 +83,6 @@ public class UserDAO {
 
             if(rs.next()){
             rs.previous();
-            //System.out.println(rs);
-            //faz o que tem que fazer
-
                 while ( rs.next() ) {
 
                     User user = new User();
