@@ -402,17 +402,16 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             itV.setIdProduto(id);
             itV.setDescProd(prod.getDescricao());
             itV.setQuantidade(Integer.parseInt(txtQtd.getText()));
-            //itV.setValorUnit(Double.parseDouble(txtVunit.getText().replace(".", "").replace(",", ".")));
             itV.setValorUnit(Double.parseDouble(pdao.pesquisa_por_id((Integer) id).getPvenda().toString()));
             itV.setSubtotal(Double.parseDouble(txtSubt.getText().replace(".", "").replace(",", ".")));
             
-            //fazer condição se ja existe o produto na jtable e apenas somar a quantidade
+            //condição se ja existe o produto na jtable e apenas somar a quantidade
             for(int linha=0; linha<tableModel.getRowCount();linha++){
                 int valorColuna= (Integer) tableModel.getValueAt(linha, 0);
                 if(valorColuna == prod.getId()){
                     
                     int soma;
-                    
+                   
                     int quantnova = Integer.parseInt(txtQtd.getText());
                     int lancada = Integer.parseInt(tableModel.getValueAt(linha, 2).toString());
                     soma = lancada + quantnova;
@@ -529,7 +528,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             ItemVenda itV = new ItemVenda();
             ItemVendaDAO itVdao = new ItemVendaDAO();
 
-            //fazer condição se ja existe o produto na jtable e apenas somar a quantidade
+            
             for(int linha=0; linha<tableModel.getRowCount();linha++){
                 int valorColuna = (Integer) tableModel.getValueAt(linha, 0);
 

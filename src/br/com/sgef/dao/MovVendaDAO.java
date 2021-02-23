@@ -169,38 +169,36 @@ public class MovVendaDAO {
   
     }
     
-    public List<ItemVenda> pegaProdutosEstono(int itV){
-        
-        List<ItemVenda> itVendas = new ArrayList<>();
+    //ao clicar em cancelar no mov venda Estorna os produtos para o estoque
+    public void cancelaProdutos(int codVenda){
         
         Connection con = ConnectionFactory.getConnection();
-        
-        
+        PreparedStatement stmt = null;
+        String sql = "SELECT id_produto, quantidade FROM itvenda WHERE id_venda = ?";
+                     
+        JOptionPane.showMessageDialog(null, "Os produtos da venda será estornado para o Estoque !!!");
         try {
+            PreparedStatement pst = con.prepareStatement(sql);
             
-            String sql = "SELECT id_produto, quantidade FROM itvenda WHERE id_venda = ?";
-            pst = con.prepareStatement(sql);
-            pst.setInt(1, itV);
-            
-            rs = pst.executeQuery();
-            
+            pst.setInt(1, codVenda);
+            pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
             while ( rs.next() ) {
-                ItemVenda itens = new ItemVenda();
-                itens.setIdProduto(rs.getInt("id_produto"));
-                itens.setQuantidade(rs.getInt("quantidade"));
-                itVendas.add(itens);
-                
+                try {
+                    stmt = con.prepareCall("{call entradaEstoque(?, ?)}");
+                    stmt.setInt(1, rs.getInt("id_produto"));
+                    stmt.setInt(2, rs.getInt("quantidade"));
+                    stmt.execute(); 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
-            
-            
+    
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return itVendas;
         
     }
-    
-    
     
 }

@@ -72,17 +72,17 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cboFormaPag = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMovVenda = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnRelLista = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         cboUser = new javax.swing.JComboBox();
         txtDataInic = new javax.swing.JFormattedTextField();
         txtDataFin = new javax.swing.JFormattedTextField();
-        jButton4 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -94,12 +94,12 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Form. Pagamento");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -130,11 +130,11 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblMovVenda);
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Rel. Lista");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRelLista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRelLista.setText("Rel. Lista");
+        btnRelLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRelListaActionPerformed(evt);
             }
         });
 
@@ -174,12 +174,12 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 51, 51));
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setText("Cancelar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -192,11 +192,11 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnRelLista)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -218,7 +218,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel4))))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -231,7 +231,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(btnBuscar)
                             .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -249,9 +249,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(btnRelLista)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -271,7 +271,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_txtDataInicFocusGained
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         
         MovVendaDAO dao = new MovVendaDAO();
@@ -311,8 +311,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                         setBackground(Color.RED); 
                         setForeground(Color.WHITE);
                     } else { 
-                         setBackground(table.getBackground());
-                         setForeground(table.getForeground());
+                        setBackground(table.getBackground());
+                        setForeground(table.getForeground());  
                     } 
                     return this; 
                 } 
@@ -320,7 +320,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
         }
  
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void cboUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUserActionPerformed
         // TODO add your handling code here:
@@ -332,32 +332,31 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         System.setProperty("codvenda", tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0).toString());
     }//GEN-LAST:event_tblMovVendaMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRelListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelListaActionPerformed
         // TODO add your handling code here:
         VendaDAO dao = new VendaDAO();
         dao.abrirListaProd(Integer.parseInt(System.getProperty("codvenda")));
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRelListaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         MovVendaDAO dao = new MovVendaDAO();
-        
-        dao.cancelaVenda((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));
+        //Estorna os produtos para o Estoque
+        dao.cancelaProdutos((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));
+        //Cancela a venda
+        dao.cancelaVenda((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));   
+        btnBuscarActionPerformed(evt);
 
-        jButton1ActionPerformed(evt);
-   
-  
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnRelLista;
     private javax.swing.JComboBox cboFormaPag;
     public javax.swing.JComboBox cboUser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
