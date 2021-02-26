@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.sql.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -299,17 +300,18 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         
         for (MovVenda mv: dao.read(movVenda)) {
             tableModel.addRow(mv);
-            
-            
+
+
             
             tblMovVenda.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){ 
-                @Override public Component getTableCellRendererComponent(JTable table, Object value, 
+                @Override 
+                public Component getTableCellRendererComponent(JTable table, Object value, 
                 boolean isSelected, boolean hasFocus, int row, int col) { 
                     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col); 
                    String situacao = (String) tblMovVenda.getModel().getValueAt(row, 2);
                     if ("CANCELADA".equals(situacao)) { 
                         setBackground(Color.RED); 
-                        setForeground(Color.WHITE);
+                        setForeground(Color.WHITE);  
                     } else { 
                         setBackground(table.getBackground());
                         setForeground(table.getForeground());  
@@ -317,7 +319,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                     return this; 
                 } 
             });
-
+            
         }
  
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -342,11 +344,24 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         MovVendaDAO dao = new MovVendaDAO();
         //Estorna os produtos para o Estoque
-        dao.cancelaProdutos((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));
-        //Cancela a venda
-        dao.cancelaVenda((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));   
-        btnBuscarActionPerformed(evt);
 
+        
+        String situacao = tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 2).toString();
+        //JOptionPane.showMessageDialog(null, situacao);
+        
+        switch(situacao){
+            case "CANCELADA":
+            JOptionPane.showMessageDialog(null, "A venda ja esta CANCELADA"); 
+            break;
+            
+            case "ATIVA": 
+            dao.cancelaProdutos((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));
+            //Cancela a venda
+            dao.cancelaVenda((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));   
+            btnBuscarActionPerformed(evt);
+            break;
+        }   
+             
     }//GEN-LAST:event_btnCancelarActionPerformed
 
 
