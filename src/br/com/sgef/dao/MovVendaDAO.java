@@ -13,8 +13,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -200,5 +205,31 @@ public class MovVendaDAO {
         }
         
     }
+    
+    public void abrirListaVenda(int idUser, String formPag, String dataIni, String dataFim ){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir lista Venda ?", "Atenção", JOptionPane.YES_NO_OPTION);
+         if (confirma == JOptionPane.YES_OPTION) {
+            try {
+                Map parameters = new HashMap(); 
+                parameters.put("id_user", idUser);
+                parameters.put("formPag", formPag);
+                parameters.put("dataIni", dataIni);
+                parameters.put("dataFim", dataFim);
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelLista.jasper", parameters, con);
+                JasperViewer.viewReport(print, false);
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+         }
+        
+    }
+    
+    
+    
     
 }

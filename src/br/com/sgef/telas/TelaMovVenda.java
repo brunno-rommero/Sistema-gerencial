@@ -10,7 +10,6 @@ import br.com.sgef.dao.MovVendaTableModel;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.UserComboModelDAO;
 import br.com.sgef.dao.VendaDAO;
-import br.com.sgef.model.ItemVenda;
 import br.com.sgef.model.MovVenda;
 import br.com.sgef.model.User;
 import java.awt.Color;
@@ -20,7 +19,7 @@ import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+
 
 
 
@@ -78,8 +77,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMovVenda = new javax.swing.JTable();
-        btnRelLista = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnRelListaProd = new javax.swing.JButton();
+        RelLista = new javax.swing.JButton();
         cboUser = new javax.swing.JComboBox();
         txtDataInic = new javax.swing.JFormattedTextField();
         txtDataFin = new javax.swing.JFormattedTextField();
@@ -131,16 +130,21 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblMovVenda);
 
-        btnRelLista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnRelLista.setText("Rel. Lista");
-        btnRelLista.addActionListener(new java.awt.event.ActionListener() {
+        btnRelListaProd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRelListaProd.setText("Lista Prod.");
+        btnRelListaProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelListaActionPerformed(evt);
+                btnRelListaProdActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Lista Prod.");
+        RelLista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        RelLista.setText("Rel. Lista");
+        RelLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RelListaActionPerformed(evt);
+            }
+        });
 
         cboUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,9 +197,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(btnRelLista)
+                        .addComponent(btnRelListaProd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(RelLista)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -250,8 +254,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRelLista)
-                    .addComponent(jButton3)
+                    .addComponent(btnRelListaProd)
+                    .addComponent(RelLista)
                     .addComponent(btnCancelar))
                 .addContainerGap())
         );
@@ -334,12 +338,12 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         System.setProperty("codvenda", tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0).toString());
     }//GEN-LAST:event_tblMovVendaMouseClicked
 
-    private void btnRelListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelListaActionPerformed
+    private void btnRelListaProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelListaProdActionPerformed
         // TODO add your handling code here:
         VendaDAO dao = new VendaDAO();
         dao.abrirListaProd(Integer.parseInt(System.getProperty("codvenda")));
         
-    }//GEN-LAST:event_btnRelListaActionPerformed
+    }//GEN-LAST:event_btnRelListaProdActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         MovVendaDAO dao = new MovVendaDAO();
@@ -364,14 +368,33 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
              
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void RelListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelListaActionPerformed
+        // TODO add your handling code here:
+        MovVendaDAO dao = new MovVendaDAO();
+        
+        User u = (User)userComboModel.getSelectedItem();
+        
+        String dataInicial = txtDataInic.getText().replaceAll("/", "-");
+        String[] s = dataInicial.split("-");
+        String novaDataI = s[2]+"-"+s[1]+"-"+s[0];
+        
+        String dataFinal = txtDataFin.getText().replaceAll("/", "-");
+        String[] sf = dataFinal.split("-");
+        String novaDataF = sf[2]+"-"+sf[1]+"-"+sf[0];
+        
+        dao.abrirListaVenda(u.getId(), cboFormaPag.getSelectedItem().toString(), novaDataI, novaDataF);
+
+        
+    }//GEN-LAST:event_RelListaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton RelLista;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRelLista;
+    private javax.swing.JButton btnRelListaProd;
     private javax.swing.JComboBox cboFormaPag;
     public javax.swing.JComboBox cboUser;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
