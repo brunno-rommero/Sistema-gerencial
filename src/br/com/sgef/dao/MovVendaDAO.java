@@ -215,11 +215,11 @@ public class MovVendaDAO {
          if (confirma == JOptionPane.YES_OPTION) {
             try {
                 Map parameters = new HashMap(); 
-                parameters.put("id_user", idUser);
-                parameters.put("formPag", formPag);
-                parameters.put("dataIni", dataIni);
-                parameters.put("dataFim", dataFim);
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelLista.jasper", parameters, con);
+                parameters.put("idUser", idUser);
+                parameters.put("FormPag", formPag);
+                parameters.put("DataIni", dataIni);
+                parameters.put("DataFim", dataFim);
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVenda.jasper", parameters, con);
                 JasperViewer.viewReport(print, false);
             }catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
