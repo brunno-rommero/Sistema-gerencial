@@ -219,8 +219,27 @@ public class MovVendaDAO {
                 parameters.put("FormPag", formPag);
                 parameters.put("DataIni", dataIni);
                 parameters.put("DataFim", dataFim);
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVenda.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                
+                if((idUser == 0) && (formPag == "Todos")){
+                    JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodos.jasper", parameters, con);
+                    JasperViewer.viewReport(print, false);
+                }else{
+                    if((idUser == 0) && (formPag != "Todos")){
+                        JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodosUsuario.jasper", parameters, con);
+                        JasperViewer.viewReport(print, false); 
+                    }
+                    else if((formPag == "Todos") && (idUser != 0)){
+                        JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodosFormaPag.jasper", parameters, con);
+                        JasperViewer.viewReport(print, false);
+                    }
+                    else{
+                        JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVenda.jasper", parameters, con);
+                        JasperViewer.viewReport(print, false);
+                    }
+                    
+                }
+                
+               
             }catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -228,8 +247,5 @@ public class MovVendaDAO {
          }
         
     }
-    
-    
-    
-    
+   
 }
