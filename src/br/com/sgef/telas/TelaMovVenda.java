@@ -83,6 +83,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         txtDataInic = new javax.swing.JFormattedTextField();
         txtDataFin = new javax.swing.JFormattedTextField();
         btnCancelar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -188,6 +190,17 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Rel. Forma Pag.");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setText("Rel. Sitação Venda");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,13 +208,17 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRelListaProd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RelLista)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -225,7 +242,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel4))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +273,9 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRelListaProd)
                     .addComponent(RelLista)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -387,6 +406,38 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_RelListaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        MovVendaDAO dao = new MovVendaDAO();
+        User u = (User)userComboModel.getSelectedItem();
+        
+        String dataInicial = txtDataInic.getText().replaceAll("/", "-");
+        String[] s = dataInicial.split("-");
+        String novaDataI = s[2]+"-"+s[1]+"-"+s[0];
+        
+        String dataFinal = txtDataFin.getText().replaceAll("/", "-");
+        String[] sf = dataFinal.split("-");
+        String novaDataF = sf[2]+"-"+sf[1]+"-"+sf[0];
+        
+        if(cboFormaPag.getSelectedItem() == "Todos"){   
+            if(u.getUsuario() == "Todos"){
+                //JOptionPane.showMessageDialog(null, "entrou");
+                dao.abrirListAgrupFormTodosUser(novaDataI, novaDataF);
+            }else{
+              dao.abrirListAgrupForm(u.getId(), novaDataI, novaDataF);  
+            }
+        
+        }else{
+            if(u.getUsuario() != "Todos"){
+                dao.abrirListAgrupFormInd(u.getId(), cboFormaPag.getSelectedItem().toString(), novaDataI, novaDataF);
+            }else{
+                dao.abrirListAgrupFormSelected(cboFormaPag.getSelectedItem().toString(), novaDataI, novaDataF);
+            }
+            
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton RelLista;
@@ -395,6 +446,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRelListaProd;
     private javax.swing.JComboBox cboFormaPag;
     public javax.swing.JComboBox cboUser;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
