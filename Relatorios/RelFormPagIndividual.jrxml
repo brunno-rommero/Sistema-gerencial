@@ -33,10 +33,9 @@
 FROM
      `user` user INNER JOIN `venda` venda ON user.`id` = venda.`id_usuario`
 
-WHERE dataVenda BETWEEN $P{dataFim} AND $P{dataIni} AND
+WHERE dataVenda BETWEEN $P{dataIni} AND $P{dataFim} AND
 id_usuario = $P{User} AND
-formaPag = $P{formPag}
-]]>
+formaPag = $P{formPag}]]>
 	</queryString>
 	<field name="venda_id" class="java.lang.Integer"/>
 	<field name="venda_situacao" class="java.lang.String"/>
