@@ -350,10 +350,110 @@ public class MovVendaDAO {
             }
             
          }   
+
+    }
+    
+    
+    public void abrirRelSitVenda(int user, String formPag, String dataIni, String dataFim ){
         
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
         
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir este Relatório ?", "Atenção", JOptionPane.YES_NO_OPTION);
+         if (confirma == JOptionPane.YES_OPTION) {
+            try {
+                Map parameters = new HashMap(); 
+                parameters.put("User", user);
+                parameters.put("formaPag", formPag);
+                parameters.put("dataIni", dataIni);
+                parameters.put("dataFim", dataFim);
+                
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVenda.jasper", parameters, con);
+                JasperViewer.viewReport(print, false);
+                
+               
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+         }   
+
+    }
+    
+    public void abrirRelSitVendaTodos(String dataIni, String dataFim ){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir este Relatório ?", "Atenção", JOptionPane.YES_NO_OPTION);
+         if (confirma == JOptionPane.YES_OPTION) {
+            try {
+                Map parameters = new HashMap(); 
+                parameters.put("dataIni", dataIni);
+                parameters.put("dataFim", dataFim);
+                
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodos.jasper", parameters, con);
+                JasperViewer.viewReport(print, false);
+                
+               
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+         }   
+
+    }
+    
+    public void abrirRelSitVendaTodosUser(String formPag, String dataIni, String dataFim ){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir este Relatório ?", "Atenção", JOptionPane.YES_NO_OPTION);
+         if (confirma == JOptionPane.YES_OPTION) {
+            try {
+                Map parameters = new HashMap();
+                parameters.put("formaPag", formPag);
+                parameters.put("dataIni", dataIni);
+                parameters.put("dataFim", dataFim);
+                
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodosUser.jasper", parameters, con);
+                JasperViewer.viewReport(print, false);
+                
+               
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+         }   
+
     }
 
+    public void abrirRelSitVendaTodasForm(int user, String dataIni, String dataFim ){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir este Relatório ?", "Atenção", JOptionPane.YES_NO_OPTION);
+         if (confirma == JOptionPane.YES_OPTION) {
+            try {
+                Map parameters = new HashMap();
+                parameters.put("User", user);
+                parameters.put("dataIni", dataIni);
+                parameters.put("dataFim", dataFim);
+                
+                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodasForm.jasper", parameters, con);
+                JasperViewer.viewReport(print, false);
+                
+               
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+         }   
+
+    }
+    
     
  
 }

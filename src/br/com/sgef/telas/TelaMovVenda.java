@@ -200,6 +200,11 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Rel. Sitação Venda");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -437,6 +442,42 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        MovVendaDAO dao = new MovVendaDAO();
+        User u = (User)userComboModel.getSelectedItem();
+        
+        String dataInicial = txtDataInic.getText().replaceAll("/", "-");
+        String[] s = dataInicial.split("-");
+        String novaDataI = s[2]+"-"+s[1]+"-"+s[0];
+        
+        String dataFinal = txtDataFin.getText().replaceAll("/", "-");
+        String[] sf = dataFinal.split("-");
+        String novaDataF = sf[2]+"-"+sf[1]+"-"+sf[0];
+        
+        
+        
+        
+        if(cboFormaPag.getSelectedItem() == "Todos"){   
+            if(u.getUsuario() == "Todos"){
+                //JOptionPane.showMessageDialog(null, "entrou");
+                dao.abrirRelSitVendaTodos(novaDataI, novaDataF);
+            }else{
+                dao.abrirRelSitVendaTodasForm(u.getId(), novaDataI, novaDataF);  
+            }
+        
+        }else{
+            if(u.getUsuario() != "Todos"){
+                dao.abrirRelSitVenda(u.getId(), cboFormaPag.getSelectedItem().toString(), novaDataI, novaDataF);
+            }else{
+                dao.abrirRelSitVendaTodosUser(cboFormaPag.getSelectedItem().toString(), novaDataI, novaDataF);
+            }
+            
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
