@@ -5,20 +5,25 @@
  */
 package br.com.sgef.telas;
 
+import br.com.sgef.dao.MovCaixaDAO;
 import br.com.sgef.dao.MovVendaDAO;
 import br.com.sgef.dao.MovVendaTableModel;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.UserComboModelDAO;
 import br.com.sgef.dao.VendaDAO;
+import br.com.sgef.model.MovCaixa;
 import br.com.sgef.model.MovVenda;
 import br.com.sgef.model.User;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.sql.Date;
+//import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.util.Date;
 
 
 
@@ -37,9 +42,11 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
     public TelaMovVenda() {
         initComponents();
         
-        //tblMovVenda.setModel(tableModel);
-        //tableModel.setTableColumnModel(tblMovVenda.getColumnModel());
-
+        Date data = new Date();
+        
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        txtDataInic.setText(formatador.format(data));
+        txtDataFin.setText(formatador.format(data));
         userComboModel = new UserComboModelDAO();
         
         UserDAO Udao = new UserDAO();
@@ -323,8 +330,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         
         movVenda.setUsuario(u.getId());
         movVenda.setFormPag(cboFormaPag.getSelectedItem().toString());
-        movVenda.setDataInicial(Date.valueOf(novaDataI));
-        movVenda.setDatafinal(Date.valueOf(novaDataF));
+        movVenda.setDataInicial(java.sql.Date.valueOf(novaDataI));
+        movVenda.setDatafinal(java.sql.Date.valueOf(novaDataF));
         
         for (MovVenda mv: dao.read(movVenda)) {
             tableModel.addRow(mv);
@@ -371,9 +378,27 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         MovVendaDAO dao = new MovVendaDAO();
-        //Estorna os produtos para o Estoque
-
         
+        MovCaixa mcx = new MovCaixa();
+        MovCaixaDAO mcxDAO = new MovCaixaDAO();
+        int CodVenda = (int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0);
+        
+        Date data = new Date();
+        
+        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+        
+        mcx.setId_caixa(mcxDAO.saidaMovCaixa(CodVenda).getId_caixa());
+        mcx.setOrigemMov("VENDA CANCELADA");
+        mcx.setId_venda(CodVenda);
+        mcx.setDataMov(java.sql.Date.valueOf(formatador.format(data)));
+        mcx.setTipo("SAIDA");
+        mcx.setOrigemMov(mcxDAO.saidaMovCaixa(CodVenda).getOrigemMov());
+        mcx.setFormPag(mcxDAO.saidaMovCaixa(CodVenda).getFormPag());
+        mcx.setValor(mcxDAO.saidaMovCaixa(CodVenda).getValor());
+        
+        
+        
+ 
         String situacao = tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 2).toString();
         //JOptionPane.showMessageDialog(null, situacao);
         
@@ -383,6 +408,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
             break;
             
             case "ATIVA": 
+            mcxDAO.addMovCaixa(mcx);    
+             //Estorna os produtos para o Estoque    
             dao.cancelaProdutos((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));
             //Cancela a venda
             dao.cancelaVenda((int) tblMovVenda.getValueAt(tblMovVenda.getSelectedRow(), 0));   

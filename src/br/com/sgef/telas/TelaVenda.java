@@ -7,11 +7,13 @@ package br.com.sgef.telas;
 
 import br.com.sgef.dao.ClienteDAO;
 import br.com.sgef.dao.ItemVendaDAO;
+import br.com.sgef.dao.MovCaixaDAO;
 import br.com.sgef.util.NumeroDocument;
 import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.dao.VendaDAO;
 import br.com.sgef.dao.VendaTableModel;
 import br.com.sgef.model.ItemVenda;
+import br.com.sgef.model.MovCaixa;
 import br.com.sgef.model.Produto;
 import br.com.sgef.model.Venda;
 import br.com.sgef.util.SoNumeros;
@@ -505,6 +507,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         // TODO add your handling code here:
+        MovCaixaDAO mcxDAO = new MovCaixaDAO();
         VendaDAO dao = new VendaDAO();
         Venda venda = new Venda();
         Date data = new Date();
@@ -515,14 +518,28 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Venda Sem Produtos !!!");
         }
         else{
+            //Populando o Objeto Mov de Caixa para ser Adicionado no DB
+            MovCaixa mcx = new MovCaixa();
+            mcx.setId_caixa(mcxDAO.pegaIdVenda());
+            mcx.setId_venda(Integer.parseInt(txtVenda.getText()));
+            mcx.setDataMov(java.sql.Date.valueOf(formatador.format(data)));
+            mcx.setTipo("ENTRADA");
+            mcx.setOrigemMov("VENDA");
+            mcx.setFormPag((String) cboFormaPag.getSelectedItem());
+            mcx.setValor(total);
+
+            //Populando o Objeto venda para ser Adicionado no DB
             venda.setCliente(Integer.parseInt(txtCodCli.getText()));
             venda.setUsuario(Integer.parseInt(System.getProperty("codigo")));
             venda.setQtd_item(Double.parseDouble(tableModel.CalculaQtd()));
             venda.setDataVenda(java.sql.Date.valueOf(formatador.format(data)));
             venda.setFormaPagamento((String) cboFormaPag.getSelectedItem());
             venda.setValorTotal(total);
-
+            
+            //Adicionando Mov. caixa e venda no DB
             dao.adicionar(venda);
+            mcxDAO.addMovCaixa(mcx);
+            
             
         
             ItemVenda itV = new ItemVenda();
@@ -557,6 +574,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         txtTotal.setText("0,00");
         txtCodCli.setText(null);
         txtCliente.setText(null);
+        
 
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
