@@ -16,6 +16,7 @@ public class MovCaixa {
     private int movCaixa;
     private int id_caixa;
     private int id_venda;
+    private int idUser;
     private Date dataMov;
     private String tipo;
     private String origemMov;
@@ -65,6 +66,20 @@ public class MovCaixa {
     }
 
     /**
+     * @return the idUser
+     */
+    public int getIdUser() {
+        return idUser;
+    }
+
+    /**
+     * @param idUser the idUser to set
+     */
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    /**
      * @return the dataMov
      */
     public Date getDataMov() {
@@ -107,14 +122,14 @@ public class MovCaixa {
     }
 
     /**
-     * @return the tipoMov
+     * @return the formPag
      */
     public String getFormPag() {
         return formPag;
     }
 
     /**
-     * @param tipoMov the tipoMov to set
+     * @param formPag the formPag to set
      */
     public void setFormPag(String formPag) {
         this.formPag = formPag;
@@ -133,5 +148,8 @@ public class MovCaixa {
     public void setValor(Double valor) {
         this.valor = valor;
     }
+
+    
+
       
 }

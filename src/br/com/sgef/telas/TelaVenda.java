@@ -520,8 +520,9 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         else{
             //Populando o Objeto Mov de Caixa para ser Adicionado no DB
             MovCaixa mcx = new MovCaixa();
-            mcx.setId_caixa(mcxDAO.pegaIdVenda());
+            mcx.setId_caixa(mcxDAO.pegaIdCaixa());
             mcx.setId_venda(Integer.parseInt(txtVenda.getText()));
+            mcx.setIdUser(Integer.parseInt(System.getProperty("codigo")));
             mcx.setDataMov(java.sql.Date.valueOf(formatador.format(data)));
             mcx.setTipo("ENTRADA");
             mcx.setOrigemMov("VENDA");

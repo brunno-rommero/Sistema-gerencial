@@ -8,10 +8,13 @@ package br.com.sgef.dao;
 import br.com.sgef.dal.ConnectionFactory;
 import br.com.sgef.model.Caixa;
 import br.com.sgef.model.MovCaixa;
+import com.mysql.fabric.xmlrpc.base.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,14 +32,15 @@ public class MovCaixaDAO {
         
         try {
             
-            stmt = con.prepareCall("{call entradaMovCaixa(?, ?, ?, ?, ?, ?, ?)}");
+            stmt = con.prepareCall("{call entradaMovCaixa(?, ?, ?, ?, ?, ?, ?, ?)}");
             stmt.setInt(1, mcx.getId_caixa());
             stmt.setInt(2, mcx.getId_venda());
-            stmt.setDate(3, mcx.getDataMov());
-            stmt.setString(4, mcx.getTipo());
-            stmt.setString(5, mcx.getOrigemMov());
-            stmt.setString(6, mcx.getFormPag());
-            stmt.setDouble(7, mcx.getValor());
+            stmt.setInt(3, mcx.getIdUser());
+            stmt.setDate(4, mcx.getDataMov());
+            stmt.setString(5, mcx.getTipo());
+            stmt.setString(6, mcx.getOrigemMov());
+            stmt.setString(7, mcx.getFormPag());
+            stmt.setDouble(8, mcx.getValor());
 
             stmt.execute();
             
@@ -49,7 +53,7 @@ public class MovCaixaDAO {
    
     }
     
-    public int pegaIdVenda(){
+    public int pegaIdCaixa(){
         
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -92,11 +96,12 @@ public class MovCaixaDAO {
                 mcx.setMovCaixa(rs.getInt(1));
                 mcx.setId_caixa(rs.getInt(2));
                 mcx.setId_venda(rs.getInt(3));
-                mcx.setDataMov(rs.getDate(4));
-                mcx.setTipo(rs.getString(5));
-                mcx.setOrigemMov(rs.getString(6));
-                mcx.setFormPag(rs.getString(7));
-                mcx.setValor(rs.getDouble(8) * -1);
+                mcx.setIdUser(rs.getInt(4));
+                mcx.setDataMov(rs.getDate(5));
+                mcx.setTipo(rs.getString(6));
+                mcx.setOrigemMov(rs.getString(7));
+                mcx.setFormPag(rs.getString(8));
+                mcx.setValor(rs.getDouble(9) * -1);
             }    
  
         } catch (SQLException ex) {
@@ -107,6 +112,57 @@ public class MovCaixaDAO {
         }
         return  mcx;
     }
+    
+    public List<MovCaixa> read(String data, int idUser){
+        
+        List<MovCaixa> movCaixa = new ArrayList<>();
+        
+        try {
+            String sql;
+            Connection con = ConnectionFactory.getConnection();
+            ResultSet rs;
+            if(idUser == 0){
+                sql = ("SELECT * FROM movcaixa \n" +
+                            "WHERE dataMov = ?");
+                PreparedStatement pst = con.prepareStatement(sql); 
+                pst.setString(1, data);
+                rs = pst.executeQuery();            
+            }else{
+                sql = ("SELECT * FROM movcaixa \n" +
+                            "WHERE dataMov = ? and id_user = ?");
+                PreparedStatement pst = con.prepareStatement(sql); 
+                pst.setString(1, data);
+                pst.setInt(2, idUser);
+                rs = pst.executeQuery();
+            }
+            
+            
+            
+            while ( rs.next() ) {
+                MovCaixa mcx = new MovCaixa();
+                mcx.setMovCaixa(rs.getInt(1));
+                mcx.setId_caixa(rs.getInt(2));
+                mcx.setId_venda(rs.getInt(3));
+                mcx.setIdUser(rs.getInt(4));
+                mcx.setDataMov(rs.getDate(5));
+                mcx.setTipo(rs.getString(6));
+                mcx.setOrigemMov(rs.getString(7));
+                mcx.setFormPag(rs.getString(8));
+                mcx.setValor(rs.getDouble(9));
+                movCaixa.add(mcx);
+                        
+            }
+            
+            
+        } catch (Exception e) {
+            
+        }
+        return movCaixa;
+        
+    }
+    
+    
+    
     
     
 }

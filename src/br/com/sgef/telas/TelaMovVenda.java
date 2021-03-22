@@ -50,8 +50,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         userComboModel = new UserComboModelDAO();
         
         UserDAO Udao = new UserDAO();
-        
-        
+
         for (User u : Udao.pegarTodosUsers()) {
             userComboModel.addUsers(u);
             cboUser.setModel(userComboModel); 
@@ -371,9 +370,11 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
 
     private void btnRelListaProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelListaProdActionPerformed
         // TODO add your handling code here:
+
         VendaDAO dao = new VendaDAO();
         dao.abrirListaProd(Integer.parseInt(System.getProperty("codvenda")));
-        
+
+  
     }//GEN-LAST:event_btnRelListaProdActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -390,6 +391,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         mcx.setId_caixa(mcxDAO.saidaMovCaixa(CodVenda).getId_caixa());
         mcx.setOrigemMov("VENDA CANCELADA");
         mcx.setId_venda(CodVenda);
+        mcx.setIdUser(Integer.parseInt(System.getProperty("codigo")));
         mcx.setDataMov(java.sql.Date.valueOf(formatador.format(data)));
         mcx.setTipo("SAIDA");
         mcx.setOrigemMov(mcxDAO.saidaMovCaixa(CodVenda).getOrigemMov());

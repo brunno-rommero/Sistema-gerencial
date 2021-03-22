@@ -7,6 +7,7 @@ package br.com.sgef.dao;
 
 import br.com.sgef.dal.ConnectionFactory;
 import br.com.sgef.model.Venda;
+import br.com.sgef.telas.TelaLoading;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,19 +92,15 @@ public class VendaDAO {
         PreparedStatement stmt = null;
         
         int confirma = JOptionPane.showConfirmDialog(null, "Deseja imprimir lista de produtos ?", "Atenção", JOptionPane.YES_NO_OPTION);
-         if (confirma == JOptionPane.YES_OPTION) {
-            try {
-                Map parameters = new HashMap(); 
-                parameters.put("IdVenda", venda);
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/ListaVenda.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
-            }catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-            
-         }
-        
+        if (confirma == JOptionPane.YES_OPTION) {
+           try {
+               Map parameters = new HashMap(); 
+               parameters.put("IdVenda", venda);
+               JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/ListaVenda.jasper", parameters, con);
+               JasperViewer.viewReport(print, false);
+           }catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e);
+           } 
+        }     
     }
-
-
 }

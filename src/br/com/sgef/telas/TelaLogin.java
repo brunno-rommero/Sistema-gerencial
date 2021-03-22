@@ -20,8 +20,9 @@ import javax.swing.JOptionPane;
  *
  * @author BrunoRomeroAlencar
  */
+
 public class TelaLogin extends javax.swing.JFrame {
-    
+
     private UserComboModelDAO userComboModel;
     
     Connection conexao = null;
@@ -30,8 +31,9 @@ public class TelaLogin extends javax.swing.JFrame {
     User user = new User();
     UserDAO u = new UserDAO();
     
+    
      public void popuparjcombobox(){
-     
+       
         userComboModel = new UserComboModelDAO();
         UserDAO Udao = new UserDAO();
         
@@ -39,14 +41,8 @@ public class TelaLogin extends javax.swing.JFrame {
             userComboModel.addUsers(u);
             jComboBoxUser.setModel(userComboModel); 
             
-        }
-         
+        } 
        
-         
-        //jComboBoxUser.addItem(u.pegarTodosUser(user));
-        
-         
-     
      }
      
     
@@ -111,6 +107,20 @@ public class TelaLogin extends javax.swing.JFrame {
 }
     
     public TelaLogin() {
+        
+        final TelaLoading load = new TelaLoading();
+        load.setVisible(true);
+        
+        Thread t = new  Thread(){
+            @Override
+            public void run(){
+                
+                
+                load.dispose();
+            }
+        };
+        
+        
         initComponents();
         conexao = ModuloConexao.conector();
         System.out.println(conexao);
@@ -125,6 +135,10 @@ public class TelaLogin extends javax.swing.JFrame {
         u.pegarTodosUser(user);
          
         jComboBoxUser.setModel(new DefaultComboBoxModel(new Vector(u.pegarTodosUser(user))));
+        
+        
+        
+        
         
         
     }
@@ -272,9 +286,10 @@ public class TelaLogin extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaLogin().setVisible(true);
-            }
+                public void run() {
+                 new TelaLogin().setVisible(true);
+                }
+
         });
     }
 
