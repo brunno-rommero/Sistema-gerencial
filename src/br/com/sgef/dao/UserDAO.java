@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class UserDAO {
     
-        Connection conexao = null;
+    Connection conexao = null;
 	PreparedStatement pst = null;
 	ResultSet rs = null;
 
@@ -234,7 +234,8 @@ public class UserDAO {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Algo deu errado !!!");
-
+            // Aqui se ocorrer exception de user ja esta amarrado com alguma outra operação nao 
+            //deixa excluir
         }
     } 
     

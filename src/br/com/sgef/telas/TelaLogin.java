@@ -11,7 +11,9 @@ import br.com.sgef.dao.UserComboModelDAO;
 import br.com.sgef.dao.UserDAO;
 import br.com.sgef.dao.VendaTableModel;
 import br.com.sgef.model.User;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -261,6 +263,12 @@ public class TelaLogin extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+         carregar c = new carregar();
+         c.BarraCarregamento.setStringPainted(true);
+         c.setVisible(true);
+         c.BarraCarregamento.setValue(50);
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -283,14 +291,19 @@ public class TelaLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
+        c.BarraCarregamento.setValue(75);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                 new TelaLogin().setVisible(true);
+                 
+                  new TelaLogin().setVisible(true);
+                  c.dispose();
                 }
 
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,7 +8,6 @@ package br.com.sgef.dao;
 import br.com.sgef.dal.ConnectionFactory;
 import br.com.sgef.model.Caixa;
 import br.com.sgef.model.MovCaixa;
-import com.mysql.fabric.xmlrpc.base.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -135,9 +134,7 @@ public class MovCaixaDAO {
                 pst.setInt(2, idUser);
                 rs = pst.executeQuery();
             }
-            
-            
-            
+
             while ( rs.next() ) {
                 MovCaixa mcx = new MovCaixa();
                 mcx.setMovCaixa(rs.getInt(1));
@@ -160,9 +157,5 @@ public class MovCaixaDAO {
         return movCaixa;
         
     }
-    
-    
-    
-    
-    
+
 }

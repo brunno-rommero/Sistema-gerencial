@@ -372,6 +372,7 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 
         VendaDAO dao = new VendaDAO();
+        
         dao.abrirListaProd(Integer.parseInt(System.getProperty("codvenda")));
 
   

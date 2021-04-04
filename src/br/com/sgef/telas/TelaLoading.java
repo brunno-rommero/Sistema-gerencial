@@ -31,6 +31,7 @@ public class TelaLoading extends javax.swing.JInternalFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
 
         setTitle("Carregando");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Carregando ...");
 
