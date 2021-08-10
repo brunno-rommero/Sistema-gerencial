@@ -9,15 +9,10 @@ package br.com.sgef.dao;
 import br.com.sgef.model.MovVenda;
 import br.com.sgef.util.NumberRenderer;
 import br.com.sgef.util.FormatRenderer;
-import java.awt.Color;
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.TableView.TableRow;
 
 /**
  *

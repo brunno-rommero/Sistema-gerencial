@@ -6,8 +6,11 @@
 package br.com.sgef.telas;
 
 import br.com.sgef.dao.MarcaDAO;
+import br.com.sgef.dao.ProdutoDAO;
 import br.com.sgef.model.Marca;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -448,6 +451,8 @@ public class TelaCadMarca extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tblMarcaMouseClicked
 
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;

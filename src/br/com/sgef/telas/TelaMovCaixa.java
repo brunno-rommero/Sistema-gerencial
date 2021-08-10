@@ -18,6 +18,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -247,7 +248,7 @@ public class TelaMovCaixa extends javax.swing.JInternalFrame {
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,8 +269,8 @@ public class TelaMovCaixa extends javax.swing.JInternalFrame {
         }
         
         for (MovCaixa mcx: dao.read(novaData, u.getId())) {
-            tableModel.addRow(mcx);
-        }    
+        tableModel.addRow(mcx);
+        }
         
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
         Double total = Double.parseDouble(tableModel.CalculaTotal().toString());

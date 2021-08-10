@@ -166,9 +166,7 @@ public class MovVendaDAO {
             pst.setInt(1, codVenda);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Venda Cancelada com Sucesso!");
-             
-             
-             
+   
         } catch (Exception e) {
         }
   
@@ -221,20 +219,28 @@ public class MovVendaDAO {
                 parameters.put("DataFim", dataFim);
                 
                 if((idUser == 0) && (formPag == "Todos")){
-                    JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodos.jasper", parameters, con);
-                    JasperViewer.viewReport(print, false);
+                    JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodos.jasper", parameters, con);
+                    JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 }else{
                     if((idUser == 0) && (formPag != "Todos")){
-                        JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodosUsuario.jasper", parameters, con);
-                        JasperViewer.viewReport(print, false); 
+                        JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodosUsuario.jasper", parameters, con);
+                        JasperViewer viewer = new JasperViewer(print, false);
+                        viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                        viewer.setVisible(true); 
                     }
                     else if((formPag == "Todos") && (idUser != 0)){
-                        JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodosFormaPag.jasper", parameters, con);
-                        JasperViewer.viewReport(print, false);
+                        JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVendaTodosFormaPag.jasper", parameters, con);
+                        JasperViewer viewer = new JasperViewer(print, false);
+                        viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                        viewer.setVisible(true);
                     }
                     else{
-                        JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVenda.jasper", parameters, con);
-                        JasperViewer.viewReport(print, false);
+                        JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelListaVenda.jasper", parameters, con);
+                        JasperViewer viewer = new JasperViewer(print, false);
+                        viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                        viewer.setVisible(true);
                     }
                     
                 }
@@ -261,8 +267,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPag.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPag.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -288,8 +296,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPagIndividual.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPagIndividual.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -314,8 +324,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPagUser.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPagUser.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -341,8 +353,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPagSelected.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelFormPagSelected.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -368,8 +382,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVenda.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVenda.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -392,8 +408,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodos.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodos.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -417,8 +435,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodosUser.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodosUser.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {
@@ -442,8 +462,10 @@ public class MovVendaDAO {
                 parameters.put("dataIni", dataIni);
                 parameters.put("dataFim", dataFim);
                 
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodasForm.jasper", parameters, con);
-                JasperViewer.viewReport(print, false);
+                JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/RelSituacaoVendaTodasForm.jasper", parameters, con);
+                JasperViewer viewer = new JasperViewer(print, false);
+                viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+                viewer.setVisible(true);
                 
                
             }catch (Exception e) {

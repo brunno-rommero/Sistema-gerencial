@@ -99,10 +99,12 @@ public class VendaDAO {
                Map parameters = new HashMap(); 
                parameters.put("IdVenda", venda);
                
-                JasperPrint print = JasperFillManager.fillReport("C:/Users/Bruno/Desktop/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/ListaVenda.jasper", parameters, con);
+               JasperPrint print = JasperFillManager.fillReport("D:/BKP/Documentos/NetBeansProjects/SGEF/Relatorios/ListaVenda.jasper", parameters, con);
                
-               JasperViewer.viewReport(print, false);
-               
+               JasperViewer viewer = new JasperViewer(print, false);
+               viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+               viewer.setVisible(true);
+ 
            }catch (Exception e) {
                JOptionPane.showMessageDialog(null, e);
            } 

@@ -19,7 +19,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 //import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -372,9 +371,8 @@ public class TelaMovVenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 
         VendaDAO dao = new VendaDAO();
-        
         dao.abrirListaProd(Integer.parseInt(System.getProperty("codvenda")));
-
+        
   
     }//GEN-LAST:event_btnRelListaProdActionPerformed
 

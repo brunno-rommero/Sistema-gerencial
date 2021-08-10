@@ -100,6 +100,8 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         tblProduto = new javax.swing.JTable();
         txtCompra = new javax.swing.JTextField();
         txtvend = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -112,6 +114,14 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Descrição");
 
+        comboMarca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboMarcaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                comboMarcaMousePressed(evt);
+            }
+        });
         comboMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboMarcaActionPerformed(evt);
@@ -121,6 +131,12 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         jLabel3.setText("Marca*");
 
         jLabel4.setText("Linha*");
+
+        ComboLinha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComboLinhaMouseClicked(evt);
+            }
+        });
 
         jLabel5.setText("Estoque");
 
@@ -205,6 +221,20 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
         txtvend.setToolTipText("");
 
+        jButton1.setText("+");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("+");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,12 +259,18 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1)))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(ComboLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton4)))
+                                .addGap(23, 23, 23)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEstoque)
                                     .addGroup(layout.createSequentialGroup()
@@ -288,30 +324,30 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboLinha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton4))
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10))
+                    .addComponent(jLabel6)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtvend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -522,6 +558,7 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
 
     private void comboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMarcaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_comboMarcaActionPerformed
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
@@ -545,6 +582,8 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
             });
 
         }
+        
+        
 
     }//GEN-LAST:event_txtPesquisarKeyReleased
 
@@ -607,6 +646,51 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_txtCompraKeyPressed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        TelaCadMarca marca = new TelaCadMarca();
+        getParent().add(marca);
+        marca.setVisible(true);
+        marca.txtPesquisar.grabFocus();
+        marca.setPosicao();
+        
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboMarcaMouseClicked
+        // TODO add your handling code here:
+       ProdutoDAO dao = new ProdutoDAO();
+        marcaComboModel.reset();
+        for (Marca m : dao.pegarTodasMarca()) {
+            marcaComboModel.addMarcas(m);
+            comboMarca.setModel(marcaComboModel); 
+        }
+    }//GEN-LAST:event_comboMarcaMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        TelaCadLinha linha = new TelaCadLinha();
+        getParent().add(linha);
+        linha.setVisible(true);
+        linha.txtPesquisar.grabFocus();
+        linha.setPosicao();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void comboMarcaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboMarcaMousePressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_comboMarcaMousePressed
+
+    private void ComboLinhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboLinhaMouseClicked
+        // TODO add your handling code here:
+        ProdutoDAO dao = new ProdutoDAO();
+        linhaComboModel.reset();
+        for (Linha l : dao.pegarTodasLinha()) {
+            linhaComboModel.addLinhas(l);
+            ComboLinha.setModel(linhaComboModel); 
+        }
+    }//GEN-LAST:event_ComboLinhaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox ComboLinha;
@@ -614,8 +698,10 @@ public class TelaCadProduto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSave;
     public javax.swing.JComboBox comboMarca;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

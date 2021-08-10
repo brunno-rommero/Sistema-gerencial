@@ -233,7 +233,7 @@ public class UserDAO {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Algo deu errado !!!");
+            JOptionPane.showMessageDialog(null, "Não é Possivel Excluir Usuário que ja efetuou Venda.");
             // Aqui se ocorrer exception de user ja esta amarrado com alguma outra operação nao 
             //deixa excluir
         }
